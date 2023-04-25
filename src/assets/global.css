@@ -1,0 +1,57 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  color: #333;
+  font-size: 14px;
+}
+body {
+  background-color: #EEEEEE;
+}
+em,
+i {
+    font-style: normal;
+}
+
+li {
+    list-style: none;
+}
+a {
+  text-decoration: none;
+}
+.w {
+  width: 1200px;
+  margin: 0 auto;
+}
+/* 去掉滚动条 */
+  ::-webkit-scrollbar {
+      width: 0;
+      height: 0;
+      color: transparent;
+    }
+/* 全局修改失焦后的样式 */
+
+/* primary类型按钮 */
+.el-button.el-button--primary.is-link:not(.is-disabled):focus, .el-button.el-button--primary.is-link:not(.is-disabled):hover{
+  color:var(--el-color-primary)!important;
+}
+
+/* warning类型按钮 */
+.el-button.el-button--warning.is-link:not(.is-disabled):focus, .el-button.el-button--warning.is-link:not(.is-disabled):hover{
+  color:var(--el-color-warning)!important;
+}
+
+/* success类型按钮 */
+.el-button.el-button--success.is-link:not(.is-disabled):focus, .el-button.el-button--success.is-link:not(.is-disabled):hover{
+  color:var(--el-color-success)!important;
+}
+
+/* info类型按钮 */
+.el-button.el-button--info.is-link:not(.is-disabled):focus, .el-button.el-button--info.is-link:not(.is-disabled):hover{
+  color:var(--el-color-info)!important;
+}
+
+/* danger类型按钮 */
+:deep(.el-button.el-button--danger.is-link:not(.is-disabled):focus, .el-button.el-button--danger.is-link:not(.is-disabled):hover){
+  color:var(--el-color-danger)!important;
+}
