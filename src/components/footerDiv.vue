@@ -3,17 +3,6 @@
     <footer>
       <div class="footer">
         <div class="w">
-          <div class="mod_server">
-            <ul>
-              <li v-for="(item, index) in footerlist" :key="index">
-                <h5></h5>
-                <div class="service_txt">
-                  <h4>{{ item.title }}</h4>
-                  <p>{{ item.content }}</p>
-                </div>
-              </li>
-            </ul>
-          </div>
           <div class="mod_copyright">
             <div class="links"> <a href="">关于我们</a> | <a href="">联系我们</a> | <a href="">联系客服</a> |<a href="">商家入驻</a>
               |<a href="">营销中心</a> |<a href="">手机品优购</a> |<a href="">友情链接</a> |<a href="">销售联盟</a> |<a href="">品优购社区</a>
@@ -33,12 +22,6 @@
 export default {
   data() {
     return {
-      footerlist: [
-        { title: '正品保障', content: '正品保障,提供发票' },
-        { title: '正品保障', content: '正品保障,提供发票' },
-        { title: '正品保障', content: '正品保障,提供发票' },
-        { title: '正品保障', content: '正品保障,提供发票' },
-        { title: '正品保障', content: '正品保障,提供发票' }]
     }
   }
 }
@@ -47,9 +30,9 @@ export default {
 /* 底部模块开始  */
 .footer {
   width: 100%;
-  height: 250px;
+  height: 150px;
   background-color: #f5f5f5;
-  padding-top: 30px;
+  padding-top: 20px;
   // position: absolute;
   // top: 200px
 }

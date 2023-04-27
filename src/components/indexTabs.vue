@@ -1,53 +1,34 @@
 <template>
   <div>
     <main class="w">
-      <div class="container">
-        <sideBar :storelist="storelist" @sonActiveTab="getActiveTab"></sideBar>
-        <div class="container-center">
-          <el-carousel height="450px">
-            <el-carousel-item v-for="item in imglist" :key="item">
-              <img :src="item" alt="">
-            </el-carousel-item>
-          </el-carousel>
-        </div>
-        <div class="container-right">
-          <div class="container-right-top">
-            <div class="avatar">
-              <img src="https://www.pethome.com.cn/themes/chongwu/images/store/avatar.png" alt="">
-            </div>
-            <div class="login-info">
-              <span>Hi，欢迎来到宠物之家商城!</span>
-            </div>
-            <div class="btn">
-              <el-button round type="danger" plain @click="login(2)">去注册</el-button>
-              <el-button round type="danger" plain @click="login(1)">去登陆</el-button>
-            </div>
+      <div class="bg">
+        <div class="container">
+          <div style="margin-right: 10px;">
+            <sideBar :storelist="storelist" @sonActiveTab="getActiveTab"></sideBar>
           </div>
-          <div class="container-right-buttom">
-            <div class="notice" @click="toSaveDetail">
-              <div class="title">
-                <h4>公告</h4>
-              </div>
-              <div class="content">
-                <ul>
-                  <!-- <li></li> -->
-                  <li v-for="(item, index) in noticelist" :key="index" style="margin-bottom: 8px;"><i
-                      class="el-icon-s-flag" style="color: red"></i> {{ item }}</li>
-                </ul>
-              </div>
-            </div>
-            <div class="total">目前总救助金余额：<span style="color:red">253.6</span> 元</div>
+          <div class="container-center">
+            <el-carousel height="370px">
+              <el-carousel-item v-for="item in imglist" :key="item">
+                <img :src="item" alt="">
+              </el-carousel-item>
+            </el-carousel>
+          </div>
+          <div class="container-right">
+            <indexRight></indexRight>
           </div>
         </div>
       </div>
+
     </main>
   </div>
 </template>
 <script>
 import sideBar from '@/components/sideBar.vue'
+import indexRight from './indexRight.vue'
 export default {
   components: {
-    sideBar
+    sideBar,
+    indexRight
   },
   data() {
     return {
@@ -94,23 +75,35 @@ export default {
 main {
   position: relative;
   height: 450px;
+  margin-top: 20px;
+
+  .bg {
+    background-color: #fff;
+    border-radius: 20px;
+    overflow: hidden;
+  }
+
+  .container {
+    margin: 20px;
+  }
 
   .container-center {
     float: left;
-    width: 748px;
-    height: 450px;
+    width: 615px;
+    height: 370px;
+    margin-left: 15px;
     background-color: pink;
 
     img {
-      height: 450px;
+      height: 370px;
     }
   }
 
   .container-right {
     position: relative;
-    left: 980px;
-    width: 220px;
-    height: 450px;
+    left: 890px;
+    width: 280px;
+    height: 370px;
     background-color: #fff;
 
     .container-right-top {
@@ -140,40 +133,6 @@ main {
         position: absolute;
         top: 170px;
         left: 10px;
-      }
-    }
-
-    .container-right-buttom {
-      position: relative;
-      width: 220px;
-      height: 230px;
-
-      .total {
-        position: absolute;
-        top: 200px;
-        left: 20px;
-      }
-
-      .notice {
-        position: absolute;
-        top: 10px;
-        left: 20px;
-        cursor: pointer;
-
-        .content {
-          margin-top: 10px;
-
-          ul li {
-            //color: #333;
-            color: #c1766a;
-            margin-left: -10px;
-
-            label {
-              font-weight: 700;
-              color: #f56c6c;
-            }
-          }
-        }
       }
     }
   }

@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="container-center">
-      <el-carousel height="450px">
+      <el-carousel :autoplay="false" trigger="click" arrow="always" height="400px">
         <el-carousel-item v-for="item in imglist" :key="item">
           <img :src="item" alt="">
         </el-carousel-item>
@@ -19,12 +19,12 @@ export default {
 <style lang="less" scoped>
 .container-center {
   float: left;
-  width: 948px;
+  width: 800px;
   height: 450px;
-  background-color: pink;
+  // background-color: pink;
 
   img {
-    height: 450px;
+    width: 800px;
   }
 }
 </style>

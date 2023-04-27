@@ -3,29 +3,29 @@
     <headerDiv></headerDiv>
     <section>
       <div class="sec_main">
-        <indexPage></indexPage>
-        <!-- <hotRecom></hotRecom> -->
+        <searchDiv></searchDiv>
+        <indexTabs></indexTabs>
+        <hotRecom></hotRecom>
+        <footerDiv></footerDiv>
       </div>
     </section>
-    <footerDiv></footerDiv>
   </div>
 </template>
 <script>
-// import hotRecom from '@/components/hotRecom.vue' // 引入热门推荐板块
+import searchDiv from '@/components/searchDiv.vue'
 import footerDiv from '@/components/footerDiv.vue' // 引入底部模块
-import indexPage from '@/views/indexPage.vue' // 引入版心模块
 import headerDiv from '@/components/headerDiv.vue'
+import indexTabs from '@/components/indexTabs.vue'
+import hotRecom from '@/components/hotRecom.vue'
 export default {
   components: {
-    indexPage,
     footerDiv,
-    headerDiv
+    headerDiv,
+    indexTabs,
+    searchDiv,
+    hotRecom
   }
 }
 </script>
 
-<style lang="less" scoped>
-section {
-  height: 1400px;
-}
-</style>
+<style lang="less" scoped></style>

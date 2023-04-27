@@ -1,0 +1,205 @@
+{
+  "id": "",
+  "name": "",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "5114",
+      "name": "鞋\箱包",
+      "font_class": "xiexiangbao",
+      "unicode": "344f",
+      "unicode_decimal": 13391
+    },
+    {
+      "icon_id": "5129",
+      "name": "精选市场",
+      "font_class": "jingxuanshichang",
+      "unicode": "3451",
+      "unicode_decimal": 13393
+    },
+    {
+      "icon_id": "5130",
+      "name": "珠宝饰品",
+      "font_class": "zhubaoshipin",
+      "unicode": "3452",
+      "unicode_decimal": 13394
+    },
+    {
+      "icon_id": "5132",
+      "name": "家用电器",
+      "font_class": "jiayongdianqi",
+      "unicode": "3454",
+      "unicode_decimal": 13396
+    },
+    {
+      "icon_id": "5133",
+      "name": "食品",
+      "font_class": "shipin",
+      "unicode": "3455",
+      "unicode_decimal": 13397
+    },
+    {
+      "icon_id": "5134",
+      "name": "母婴玩具",
+      "font_class": "muyingwanju",
+      "unicode": "3456",
+      "unicode_decimal": 13398
+    },
+    {
+      "icon_id": "5135",
+      "name": "数码手机",
+      "font_class": "shumashouji",
+      "unicode": "3457",
+      "unicode_decimal": 13399
+    },
+    {
+      "icon_id": "5136",
+      "name": "鞋/包",
+      "font_class": "xiebao",
+      "unicode": "3458",
+      "unicode_decimal": 13400
+    },
+    {
+      "icon_id": "5137",
+      "name": "女装内衣",
+      "font_class": "nvzhuangneiyi",
+      "unicode": "3459",
+      "unicode_decimal": 13401
+    },
+    {
+      "icon_id": "5138",
+      "name": "户外运动",
+      "font_class": "huwaiyundong",
+      "unicode": "345a",
+      "unicode_decimal": 13402
+    },
+    {
+      "icon_id": "5142",
+      "name": "化妆品",
+      "font_class": "huazhuangpin",
+      "unicode": "345c",
+      "unicode_decimal": 13404
+    },
+    {
+      "icon_id": "5143",
+      "name": "汽车配件",
+      "font_class": "qichepeijian",
+      "unicode": "345d",
+      "unicode_decimal": 13405
+    },
+    {
+      "icon_id": "5144",
+      "name": "家纺家饰",
+      "font_class": "jiafangjiashi",
+      "unicode": "345e",
+      "unicode_decimal": 13406
+    },
+    {
+      "icon_id": "5145",
+      "name": "居家",
+      "font_class": "jujia",
+      "unicode": "345f",
+      "unicode_decimal": 13407
+    },
+    {
+      "icon_id": "5146",
+      "name": "医药保健",
+      "font_class": "yiyaobaojian",
+      "unicode": "3460",
+      "unicode_decimal": 13408
+    },
+    {
+      "icon_id": "6270",
+      "name": "男装",
+      "font_class": "nanzhuang",
+      "unicode": "346c",
+      "unicode_decimal": 13420
+    },
+    {
+      "icon_id": "6271",
+      "name": "鞋",
+      "font_class": "xie",
+      "unicode": "346d",
+      "unicode_decimal": 13421
+    },
+    {
+      "icon_id": "6272",
+      "name": "家纺",
+      "font_class": "jiafang",
+      "unicode": "346e",
+      "unicode_decimal": 13422
+    },
+    {
+      "icon_id": "200845",
+      "name": "3.1收藏",
+      "font_class": "31shoucang",
+      "unicode": "f01ab",
+      "unicode_decimal": 983467
+    },
+    {
+      "icon_id": "201581",
+      "name": "3.1关注1-选中",
+      "font_class": "31guanzhu1xuanzhong",
+      "unicode": "f0207",
+      "unicode_decimal": 983559
+    },
+    {
+      "icon_id": "201582",
+      "name": "3.1关注1",
+      "font_class": "31guanzhu1",
+      "unicode": "f0208",
+      "unicode_decimal": 983560
+    },
+    {
+      "icon_id": "201585",
+      "name": "3.1足迹",
+      "font_class": "31zuji",
+      "unicode": "f020b",
+      "unicode_decimal": 983563
+    },
+    {
+      "icon_id": "201642",
+      "name": "3.1 评论",
+      "font_class": "31pinglun",
+      "unicode": "f0217",
+      "unicode_decimal": 983575
+    },
+    {
+      "icon_id": "577348",
+      "name": "留言",
+      "font_class": "liuyan",
+      "unicode": "e744",
+      "unicode_decimal": 59204
+    },
+    {
+      "icon_id": "577381",
+      "name": "喜欢-fill",
+      "font_class": "xihuanfill",
+      "unicode": "e760",
+      "unicode_decimal": 59232
+    },
+    {
+      "icon_id": "577382",
+      "name": "喜欢",
+      "font_class": "xihuan",
+      "unicode": "e761",
+      "unicode_decimal": 59233
+    },
+    {
+      "icon_id": "593377",
+      "name": "赞同-fill",
+      "font_class": "zantongfill",
+      "unicode": "e793",
+      "unicode_decimal": 59283
+    },
+    {
+      "icon_id": "593378",
+      "name": "赞同",
+      "font_class": "zantong",
+      "unicode": "e794",
+      "unicode_decimal": 59284
+    }
+  ]
+}

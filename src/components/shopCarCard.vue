@@ -3,10 +3,10 @@
     <div class="table-box">
       <el-table ref="multipleTable" height="550" :data="tableData" tooltip-effect="dark"
         @selection-change="handleSelectionChange">
-        <el-table-column type="selection" width="35">
-        </el-table-column>
-        <el-table-column label="全选" width="100">
-        </el-table-column>
+        <!-- <el-table-column type="selection" width="35">
+        </el-table-column> -->
+        <!-- <el-table-column label="全选" width="100">
+        </el-table-column> -->
         <el-table-column prop="img" label="商品信息" width="100">
           <template slot-scope="scope">
             <div>
@@ -14,16 +14,16 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column prop="gooddecs" width="420">
+        <el-table-column prop="gooddecs" width="300">
           <template slot-scope="scope">
             <div>
               <span>{{ scope.row.gooddecs }}</span>
             </div>
           </template>
         </el-table-column>
-        <el-table-column prop="goodprice" label="单价" width="120" show-overflow-tooltip>
+        <el-table-column prop="goodprice" label="单价" show-overflow-tooltip>
         </el-table-column>
-        <el-table-column prop="number" label="数量" width="150" show-overflow-tooltip>
+        <!-- <el-table-column prop="number" label="数量" width="150" show-overflow-tooltip>
           <template slot-scope="scope">
             <div class="number">
               <el-input-number v-model="scope.row.number" :disabled="flag === 1 ? true : false" size="mini"
@@ -37,7 +37,7 @@
               <span style="color:#EE356C">{{ goodtotal=scope.row.number * scope.row.goodprice }}</span>
             </div>
           </template>
-        </el-table-column>
+        </el-table-column> -->
         <el-table-column label="操作">
           <template slot-scope="scope">
             <el-button size="mini" type="text" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
@@ -120,8 +120,9 @@ export default {
 }
 </script>
 <style lang="less" scoped>
-.number {
-  width: 50px;
-
+.table-box {
+  width: 600px;
+  //border: 1px solid #333;
+  margin: 0 auto;
 }
 </style>

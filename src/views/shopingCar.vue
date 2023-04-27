@@ -11,14 +11,14 @@
         <el-divider><i class="el-icon-shopping-cart-full"></i></el-divider>
         <div class="title">
           <div class="tit-left">
-            购物车（全部 <label class="data" for="">22</label> ）
+            我的收藏（全部 <label class="data" for="">22</label> ）
           </div>
-          <div class="tit-right">
+          <!-- <div class="tit-right">
             <div style="font-size: 18px;">已选商品 <label class="data" for="">{{ total }}</label> 元</div>
             <div>预计提供救助金 <label style="color:#EE356C" for=""> {{ fund }}</label> 元</div>
             <div> <el-button type="danger" round><label for="" style="color: #fff;font-size: 15px;">支付</label></el-button>
             </div>
-          </div>
+          </div> -->
         </div>
         <!-- 购物车卡片 -->
         <shopCarCard @gettotal="gettotal($event)"></shopCarCard>
@@ -40,26 +40,10 @@ export default {
   },
   data() {
     return {
-      input: '',
-      total: 0,
-      fund: 0
-    }
-  },
-  watch: {
-    total: {
-      handler(newval, oldval) {
-        this.fund = newval * 0.05
-      }
+      input: ''
     }
   },
   methods: {
-    gettotal($event) {
-      console.log($event)
-      this.total = $event || 0
-    }
-  },
-  mounted() {
-    this.gettotal()
   }
 }
 </script>
@@ -73,13 +57,19 @@ section {
   height: 750px;
 
   .search-box {
-    height: 60px;
+
     width: 30%;
+    margin-left: 20px;
+
+    :deep(.el-input-group__append, .el-input-group__prepend) {
+      background-color: rgb(241, 180, 180);
+    }
 
     .search {
-      float: right;
       margin-top: 20px;
-      padding-left: 10px;
+      border: 2px solid #f40;
+      border-radius: 20px;
+      overflow: hidden;
     }
   }
 

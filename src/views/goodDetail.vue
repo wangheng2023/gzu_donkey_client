@@ -2,37 +2,37 @@
   <div class="main">
     <headerDiv></headerDiv>
     <section>
-      <div class="sec_main">
-        <div class="w detail-box">
-          <div class="pageHead">
-            <el-page-header @back="goBack" content="商品详情" style="margin-left: 10px;"></el-page-header>
+      <div class="w sec_main">
+        <div class="pageHead">
+          <el-page-header @back="goBack" content="商品详情" style="margin-left: 10px;"></el-page-header>
+        </div>
+        <div class="detail-box">
+          <div class="goodtitle">
+            <h3>fghdjl当哈利;京东i撒v <label for="">123元</label></h3>
+            <span>2022.03.23 15:59 更新</span>
+            <div class="shoucang">
+              <div id="shoucang" @click="shoucang" style="font-size: 35px;margin-right: 10px;"
+                class="iconfont icon-31shoucang"></div>
+              <div id="word" style="margin-top: -10px;margin-left: 0px;">收藏</div>
+            </div>
           </div>
           <div class="content">
-            <div class="image">
-              <el-carousel type="card">
-                <el-carousel-item v-for="item in imglist" :key="item">
-                  <img style="height: 300px;" :src="item" alt="">
-                </el-carousel-item>
-              </el-carousel>
-            </div>
-            <div class="info">
-              <div class="info-title">
-                <span style="font-size: 18px;margin-left: 20px;color:#EE356C">大面筋</span>
-                <span style=" font-size: 18px;margin-right: 20px;color:#EE356C">1200元</span>
+            <zmdOthers :imglist="imglist"></zmdOthers>
+            <div class="sellerinfo">
+              <div class="avatar">
+                <img src="https://www.pethome.com.cn/themes/chongwu/images/store/avatar.png" alt="">
               </div>
-              <div class="info-content">localStorage:
-                localStorage的生命周期是永久的，关闭页面或浏览器之后localStorage中的数据也不会消失。localStorage除非主动删除数据，否则数据永远不会消失。
-                localStorage的生命周期是永久的，关闭页面或浏览器之后localStorage中的数据也不会消失。localStorage除非主动删除数据，否则数据永远不会消失。
-                localStorage的生命周期是永久的，关闭页面或浏览器之后localStorage中的数据也不会消失。localStorage除非主动删除数据，否则数据永远不会消失。
+              <div class="login-info">
+                <span>Hi，欢迎来到黔驴二手商城!</span>
               </div>
-              <div class="info-other">其他信息：</div>
+              <div class="btn">
+                <div style="width: 50%;">东区</div>
+                <div style="width: 50%;">计算机科学与技术</div>
+              </div>
+              <div class="lianxi">
+                <el-button type="danger" plain>联系我</el-button>
+              </div>
             </div>
-            <div class="btn">
-              <el-button round type="danger" plain style="margin-left: 20px;">加入购物车</el-button>
-              <el-button round type="danger" plain style="margin-right: 20px;">点我购买</el-button>
-            </div>
-            <div class="tips">该商品预计提供救助金<label for="" style="color: red;font-size: 700;">12.5</label>元</div>
-            <!-- {{ detail }} -->
           </div>
         </div>
       </div>
@@ -43,13 +43,16 @@
 <script>
 import footerDiv from '@/components/footerDiv.vue' // 引入底部模块
 import headerDiv from '@/components/headerDiv.vue'// 引入头部模块
+import zmdOthers from '@/components/zmdOthers.vue'
 export default {
   components: {
     footerDiv,
-    headerDiv
+    headerDiv,
+    zmdOthers
   },
   data() {
     return {
+      flag: 0,
       imglist: ['https://petweb1-1253856731.cos.ap-beijing.myqcloud.com/uploads/20190910/a22645df3f07d41cc351d33b75e26633.jpg',
         'https://petweb1-1253856731.cos.ap-beijing.myqcloud.com/uploads/20190910/d75bf4e276560d2590e94d1bb25ed672.jpg',
         'https://petweb1-1253856731.cos.ap-beijing.myqcloud.com/uploads/20190910/c425f923549f1e940d80bedc42622dd3.jpg',
@@ -59,67 +62,142 @@ export default {
   methods: {
     goBack() {
       this.$router.go(-1)
+    },
+    shoucang() {
+      const star = document.querySelector('#shoucang')
+      const word = document.querySelector('#word')
+      if (this.flag === 0) {
+        star.className = 'iconfont icon-xihuanfill'
+        word.innerHTML = '已收藏'
+        this.flag = 1
+      } else {
+        star.className = 'iconfont icon-31shoucang'
+        word.innerHTML = '收藏'
+        this.flag = 0
+      }
     }
   }
 }
 </script>
 
 <style lang="less" scoped>
+.icon-xihuanfill {
+  color: #ff5000;
+}
+
 section {
-  height: 610px;
+  margin-top: 10px;
+}
+
+.pageHead {
+  margin-bottom: 10px;
+  padding-top: 10px;
+  width: 100%;
+  height: 50px;
+  background-color: #fff;
+  //border-bottom: 1px solid #EE356C;
+  border-radius: 18px;
+}
+
+:deep(.el-carousel__indicators--outside) {
+  margin-top: -50px;
 }
 
 .detail-box {
-  height: 600px;
+  margin-top: 10;
+  padding-top: 10px;
+  height: 480px;
   background-color: #fff;
 
-  .pageHead {
-    padding-top: 10px;
-    width: 100%;
-    height: 50px;
-    border-bottom: 1px solid #EE356C;
-  }
+  .goodtitle {
+    position: relative;
+    width: 95%;
+    height: 60px;
+    margin: 0 auto;
+    //border: 1px solid #333;
 
-  :deep(.el-carousel__indicators--outside) {
-    margin-top: -50px;
-  }
+    h3 {
+      font-size: 24px;
 
-  .info {
-    // display: flex;
-    // align-items: center;
-    width: 100%;
-    height: 150px;
-
-    .info-title {
-      display: flex;
-      justify-content: space-between;
-      margin-top: 30px;
+      label {
+        color: #ff5000;
+        font-size: 20px;
+      }
     }
 
-    .info-content {
-      margin-left: 20px;
-      margin-top: 10px;
-      color: #333;
-      font-size: 16px;
+    span {
+      color: #8d8b8b;
     }
 
-    .info-other {
-      margin-left: 20px;
-      margin-top: 10px;
-      color: #666;
+    .shoucang {
+      position: absolute;
+      right: 0;
+      top: -10px;
+      float: right;
     }
   }
 
-  .btn {
+  .content {
     display: flex;
-    justify-content: space-between;
-    //margin-top: 30px;
+    justify-content: space-around;
+    align-items: center;
+    padding-top: 10px;
+    width: 95%;
+    margin: 0 auto;
+
+    .sellerinfo {
+      position: relative;
+      width: 300px;
+      height: 350px;
+      margin-top: -70px;
+      border-radius: 18px;
+      border: 1px solid #e3dede;
+
+      .avatar {
+        position: absolute;
+        top: 20px;
+        left: 110px;
+        width: 80px;
+        height: 80px;
+        text-align: center;
+        overflow: hidden;
+        border-radius: 50%;
+        background-color: pink;
+      }
+
+      .login-info {
+        position: absolute;
+        top: 110px;
+        width: 100%;
+        height: 20px;
+        margin: 0 auto;
+        text-align: center;
+      }
+
+      .btn {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        position: absolute;
+        top: 150px;
+        left: 30px;
+        width: 80%;
+        height: 60px;
+        text-align: center;
+        background-color: #fbfbfb;
+      }
+
+      .lianxi {
+        position: absolute;
+        top: 220px;
+        left: 30px;
+
+        .el-button {
+          width: 240px;
+        }
+      }
+    }
   }
 
-  .tips {
-    float: right;
-    margin: 10px 20px 0 0;
-    //color: #EE356C;
-  }
 }
 </style>

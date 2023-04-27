@@ -6,6 +6,7 @@ import index from '../views/homePage.vue'
 Vue.use(VueRouter)
 
 const routes = [
+  { path: '/moregoods', name: 'moregoods', component: () => import('@/components/lastTabs.vue') },
   { path: '/login', name: 'login', component: () => import('@/views/userLogin.vue') },
   { path: '/reg', name: 'reg', component: () => import('@/views/userReg.vue') },
   { path: '/index', name: 'index', component: index, children: [] },

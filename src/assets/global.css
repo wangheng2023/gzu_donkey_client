@@ -6,7 +6,8 @@
   font-size: 14px;
 }
 body {
-  background-color: #EEEEEE;
+  background-color: #eae8eb;
+  font: 12px/1.5 tahoma, arial, 'Hiragino Sans GB', '\5b8b\4f53', sans-serif;
 }
 em,
 i {
