@@ -13,7 +13,8 @@ const routes = [
   { path: '/gooddetail/:id', name: 'gooddetail', component: () => import('@/views/goodDetail.vue') },
   { path: '/savedetail', name: 'savedetail', component: () => import('@/views/saveDetail.vue') },
   { path: '/userinfo', name: 'userinfo', component: () => import('@/views/userInfo.vue') },
-  { path: '/shopingcar', name: 'shopingcar', component: () => import('@/views/shopingCar.vue') }
+  { path: '/shopingcar', name: 'shopingcar', component: () => import('@/views/shopingCar.vue') },
+  { path: '/mydialog', name: 'mydialog', component: () => import('@/views/myDialog.vue') }
 ]
 
 const router = new VueRouter({

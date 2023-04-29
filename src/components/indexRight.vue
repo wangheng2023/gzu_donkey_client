@@ -13,19 +13,19 @@
       </div>
     </div>
     <div class="container-right-buttom">
-      <div @click="jump">
+      <div @click="jump(1)">
         <div style="font-size: 40px;padding-left: 5px;" class="iconfont icon-31shoucang"></div>
         <div>宝贝收藏</div>
       </div>
-      <div>
+      <div @click="jump(2)">
         <div style="font-size: 40px;padding-left: 5px;" class="iconfont icon-31pinglun"></div>
         <div>我的会话</div>
       </div>
-      <div>
+      <div @click="jump(3)">
         <div style="font-size: 40px; padding-left: 5px;" class="iconfont icon-31guanzhu1"></div>
         <div>我的关注</div>
       </div>
-      <div>
+      <div @click="jump(4)">
         <div style="font-size: 40px;padding-left: 5px;" class="iconfont icon-31zuji"></div>
         <div>历史浏览</div>
       </div>
@@ -42,8 +42,16 @@ export default {
         this.$router.push({ name: 'reg' })
       }
     },
-    jump() {
-      this.$router.push({ name: 'shopingcar' })
+    jump(val) {
+      if (val === 1) {
+        this.$router.push({ name: 'shopingcar' })
+      } else if (val === 2) {
+        this.$router.push({ name: 'mydialog' })
+      } else if (val === 3) {
+        this.$router.push({ name: 'shopingcar' })
+      } else {
+        this.$router.push({ name: 'shopingcar' })
+      }
     }
   }
 }

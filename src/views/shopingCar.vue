@@ -3,7 +3,12 @@
     <headerDiv></headerDiv>
     <section>
       <div class="w bg">
+
         <div class="search-box">
+          <div class="pageHead">
+            <el-page-header @back="goBack" style="margin-right: 10px;">
+            </el-page-header>
+          </div>
           <el-input class="search" placeholder="搜索商品名称" v-model="input">
             <el-button slot="append" icon="el-icon-search"></el-button>
           </el-input>
@@ -44,6 +49,9 @@ export default {
     }
   },
   methods: {
+    goBack() {
+      this.$router.go(-1)
+    }
   }
 }
 </script>
@@ -52,13 +60,25 @@ section {
   height: 750px;
 }
 
+.pageHead {
+  padding-top: 10px;
+  width: 100%;
+  height: 50px;
+  line-height: 50px;
+  background-color: #fff;
+  //border-bottom: 1px solid #EE356C;
+  border-radius: 18px;
+}
+
 .bg {
   background-color: #fff;
   height: 750px;
 
   .search-box {
-
-    width: 30%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 65%;
     margin-left: 20px;
 
     :deep(.el-input-group__append, .el-input-group__prepend) {

@@ -35,6 +35,12 @@
             </div>
           </div>
         </div>
+        <div class="tabs">
+          <el-tabs type="border-card">
+            <el-tab-pane label="商品描述">商品描述</el-tab-pane>
+            <el-tab-pane label="评价">评价</el-tab-pane>
+          </el-tabs>
+        </div>
       </div>
     </section>
     <footerDiv></footerDiv>
@@ -108,6 +114,7 @@ section {
   padding-top: 10px;
   height: 480px;
   background-color: #fff;
+  border-radius: 18px;
 
   .goodtitle {
     position: relative;
@@ -199,5 +206,18 @@ section {
     }
   }
 
+}
+
+.tabs {
+  width: 100%;
+  height: 450px;
+  margin-top: 20px;
+  border-radius: 18px;
+  overflow: hidden;
+
+  .el-tabs {
+    height: 450px;
+    font-size: 18px;
+  }
 }
 </style>
