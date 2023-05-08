@@ -3,13 +3,15 @@
     <div class="hot-list">
       <el-row>
         <el-col :span="8" v-for="(item, index) in hotlist" :key="index" style="margin-top: 20px;">
-          <div class="goodbox" @click="toDetail(item)">
+          <div class="goodbox" @click="toDetail(item.id)">
             <el-card :body-style="{ padding: '0px' }" shadow="hover">
-              <img :src="item.img" class="image">
+              <img v-if="item.goodsPicInfos[0]?.isMaster === 1" :src="item.goodsPicInfos[0]?.picUrl" alt="加载失败"
+                class="image" />
+              <el-empty v-else :image-size="100" class="image"></el-empty>
               <div class="detail">
-                <h3>烤面筋</h3>
-                <span class="scrib">{{ item.decri }}</span>
-                <label for="">￥{{ item.price }}</label>
+                <h3>{{ item.goodsName }}</h3>
+                <span class="scrib">{{ item.descript }}</span>
+                <label for="">￥{{ item.cost }}</label>
               </div>
             </el-card>
           </div>
@@ -30,8 +32,7 @@ export default {
   },
   methods: {
     toDetail(item) {
-      console.log(111)
-      this.$router.push({ name: 'gooddetail', params: { id: item.price, detail: item } })
+      this.$router.push({ path: 'gooddetail', query: { id: item } })
     }
   }
 }
@@ -53,6 +54,7 @@ export default {
   .image {
     float: left;
     height: 150px;
+    width: 150px;
     //margin-left: 10px;
     margin: 10px;
   }

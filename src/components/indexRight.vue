@@ -2,12 +2,15 @@
   <div>
     <div class="container-right-top">
       <div class="avatar">
-        <img src="https://www.pethome.com.cn/themes/chongwu/images/store/avatar.png" alt="">
+        <img :src="userinfo.imageUrl || ' https://www.pethome.com.cn/themes/chongwu/images/store/avatar.png'" alt="">
       </div>
       <div class="login-info">
-        <span>Hi，欢迎来到黔驴二手商城!</span>
+        <span>{{ userinfo.mobilePhone ? userinfo.mobilePhone + ',欢迎来到黔驴二手商城!' : 'Hi，欢迎来到黔驴二手商城!' }}</span>
       </div>
-      <div class="btn">
+      <div class="btn1" v-if="userinfo.id !== ''">
+        <el-button round type="danger" plain @click="logout">退出登录</el-button>
+      </div>
+      <div class="btn" v-else>
         <el-button round type="danger" plain @click="login(2)">去注册</el-button>
         <el-button round type="danger" plain @click="login(1)">去登陆</el-button>
       </div>
@@ -34,7 +37,23 @@
 </template>
 <script>
 export default {
+  data() {
+    return {
+      userinfo: { imageUrl: '', id: '' }
+    }
+  },
+  created() {
+    this.getUserInfo()
+  },
   methods: {
+    // 一进入页面查看用户是否登录
+    async getUserInfo() {
+      const { data: res } = await this.$axios.get('/user/getCustomerInfo')
+      if (res.code === 200) {
+        this.userinfo = res.data
+        console.log('this.userinfo', res.data)
+      }
+    },
     login(e) {
       if (e === 1) {
         this.$router.push({ name: 'login' })
@@ -51,6 +70,18 @@ export default {
         this.$router.push({ name: 'shopingcar' })
       } else {
         this.$router.push({ name: 'shopingcar' })
+      }
+    },
+    // 退出登录
+    async logout() {
+      const { data: res } = await this.$axios.get('/user/logout')
+      if (res.code === 200) {
+        if (this.$route.path === '/index') {
+          this.$router.go(0)
+        } else {
+          this.$router.push({ name: 'index' })
+        }
+        window.sessionStorage.removeItem('userid')
       }
     }
   }
@@ -73,12 +104,24 @@ export default {
     overflow: hidden;
     border-radius: 50%;
     background-color: pink;
+
+    img {
+      width: 80px;
+      height: 80px;
+    }
   }
 
   .login-info {
     position: absolute;
     top: 120px;
-    left: 40px;
+    width: 100%;
+    text-align: center;
+  }
+
+  .btn1 {
+    position: absolute;
+    top: 170px;
+    left: 75px;
   }
 
   .btn {

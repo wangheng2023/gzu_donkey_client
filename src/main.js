@@ -5,11 +5,12 @@ import store from './store'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css' // 引入element样式
 import '@/assets/global.css' // 全局引入css文件
+import '@/assets/font_tsop4w2lda/iconfont.css'
 import '@/assets/font_cujtoi8d3x/iconfont.css'
 import axios from 'axios'
 
 Vue.config.productionTip = false
-axios.defaults.baseURL = 'http://localhost:9090/pet' // 设置全局默认值
+axios.defaults.baseURL = 'http://localhost:9090/donkey' // 设置全局默认值
 axios.defaults.timeout = 5000 // 设置5秒超时时间
 Vue.prototype.$axios = axios
 // 在每次请求中添加 CORS 头部

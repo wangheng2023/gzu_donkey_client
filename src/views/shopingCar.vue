@@ -26,7 +26,7 @@
           </div> -->
         </div>
         <!-- 购物车卡片 -->
-        <shopCarCard @gettotal="gettotal($event)"></shopCarCard>
+        <shopCarCard @gettotal="gettotal($event)" :tableData="tableData"></shopCarCard>
       </div>
 
     </section>
@@ -45,12 +45,54 @@ export default {
   },
   data() {
     return {
-      input: ''
+      input: '',
+      tableData: [
+        {
+          img: 'http://donkey.yuanyexiao.cn/user/image/default/191.png',
+          gooddecs: '烤面筋',
+          goodprice: '123',
+          number: 1
+        },
+        {
+          img: 'http://donkey.yuanyexiao.cn/user/image/default/591.png',
+          gooddecs: '烤面筋',
+          goodprice: '123',
+          number: 2
+        },
+        {
+          img: 'http://donkey.yuanyexiao.cn/user/image/default/101.png',
+          gooddecs: '烤面筋',
+          goodprice: '123',
+          number: 3
+        },
+        {
+          img: 'http://donkey.yuanyexiao.cn/user/image/default/199.png',
+          gooddecs: '烤面筋',
+          goodprice: '123',
+          number: 1
+        },
+        {
+          img: 'http://donkey.yuanyexiao.cn/user/image/default/300.png',
+          gooddecs: '烤面筋',
+          goodprice: '123',
+          number: 1
+        }
+      ]
     }
+  },
+  created() {
+    this.getCollect()
   },
   methods: {
     goBack() {
       this.$router.go(-1)
+    },
+    // 获得收藏列表
+    async getCollect() {
+      const { data: res } = await this.$axios.get('collect/allCollect')
+      if (res.code === 200) {
+        this.tableData = res.data
+      }
     }
   }
 }

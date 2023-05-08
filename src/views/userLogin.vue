@@ -18,19 +18,10 @@
           <el-input size="large" v-model="loginform.pass" placeholder="请输入密码" prefix-icon="el-icon-key" show-password>
           </el-input>
         </el-form-item>
-        <!-- 角色选择 -->
-        <!-- <el-form-item prop="role">
-          <el-radio-group v-model="loginform.loginFlag">
-            <el-radio label="1" size="large">学生</el-radio>
-            <el-radio label="2" size="large">教师</el-radio>
-            <el-radio label="3" size="large">管理员</el-radio>
-          </el-radio-group>
-        </el-form-item> -->
-        <!-- 按钮区 -->
         <el-form-item prop="code" style="width: 40%;">
           <el-input size="large" v-model="loginform.code" placeholder="请输入验证码"></el-input>
           <div class="codes"><img :src="img" alt=""></div>
-          <div class="next" @click="getCode()"><a href="#">看不清？下一张</a></div>
+          <div class="next" @click="getCode()"><a href="#">看不清？换一张</a></div>
         </el-form-item>
         <el-form-item class="btn">
           <el-button type="primary" @click="login('loginform')">登录</el-button>
@@ -61,8 +52,8 @@ export default {
       if (value === '') {
         callback(new Error('请输入密码'))
       } else {
-        if (this.regform.checkPass !== '') {
-          this.$refs.regform.validateField('checkPass')
+        if (this.loginform.pass !== '') {
+          // this.$refs.loginform.validateField('pass')
         }
         callback()
       }
@@ -100,10 +91,25 @@ export default {
   created() {
     this.getCode()
   },
+  beforeDestroy() {
+    this.getUserInfo()
+  },
   methods: {
     async getCode() {
-      const res = await this.$axios.get('/admin/kaptcha', { responseType: 'blob' })
+      const timestamp = new Date().getTime()
+      const res = await this.$axios.get(`/kaptcha?a=${timestamp}`, { responseType: 'blob' })
+      console.log(res.headers)
+      console.log(document.cookie)
       this.img = window.URL.createObjectURL(res.data)
+    },
+    // 一进入页面查看用户是否登录
+    async getUserInfo() {
+      const { data: res } = await this.$axios.get('user/getCustomerInfo')
+      if (res.code === 200) {
+        this.userinfo = res.data
+        console.log('this.userinfo', res.data)
+        window.sessionStorage.setItem('userid', res.data.id)
+      }
     },
     toReg() {
       this.$router.push({ name: 'reg' })
@@ -111,103 +117,31 @@ export default {
     resetForm(loginform) {
       this.$refs[loginform].resetFields()
     },
-    async login(loginform) {
+    login(loginform) {
       this.$refs[loginform].validate((valid) => {
         if (valid) {
-          alert('submit!')
-        } else {
-          console.log('error submit!!')
-          return false
+          // 获取后端反馈
+          // const loginform1 = JSON.parse(JSON.stringify(loginform))
+          this.gufy()
+          // window.sessionStorage.setItem('activeTab', 'first')
         }
       })
-      // 获取后端反馈
-      // const loginform1 = JSON.parse(JSON.stringify(loginform))
-      const { data: res } = await this.$axios.post('admin/login', {
+      // console.log(res.data)
+    },
+    async gufy() {
+      const { data: res } = await this.$axios.post('user/login', {
         username: this.loginform.username,
-        password: this.loginform.password,
+        password: this.loginform.pass,
         code: this.loginform.code
       })
       // console.log(loginform) /hometeacher
-      if (res.code !== 200) return this.$message.error(res.message)
-      this.$message.success(res.message)
-      // 登录成功后按需跳转到不同主页
-      if (this.loginform.loginFlag === '1') {
-        // 存储userid，相当于token
-        window.sessionStorage.setItem('studentid', this.loginform.username)
-        this.router.push({ path: '/home' }).catch(() => { })
-      }
-      console.log(res.data)
+      if (res.code !== 200) return this.$message.error(res.msg)
+      this.$message.success(res.msg)
+      this.$router.push({ name: 'index', query: { id: res.data.id } })
     }
   }
 }
 </script>
-
-<!-- <script setup>
-import encrypt from '@/utils/encrypt'
-import { reactive, getCurrentInstance, onUnmounted, onMounted } from 'vue'
-import { useRouter } from 'vue-router'
-const router = useRouter()
-const { proxy } = getCurrentInstance()
-const data = reactive({
-  flag: proxy.$store.state.wxlogintrigger
-})
-const loginform = reactive({
-  // 表单基础初始数据
-  username: '',
-  password: '',
-  loginFlag: '' - 0
-})
-function resetloginform() {
-  router.push({ path: '/register' }).catch(() => { })
-}
-async function login() {
-  // 获取后端反馈
-  // const loginform1 = JSON.parse(JSON.stringify(loginform))
-  const { data: res } = await proxy.$axios.post('login', {
-    username: loginform.username,
-    password: encrypt.Encrypt(loginform.password),
-    loginFlag: loginform.loginFlag
-  })
-  // console.log(loginform) /hometeacher
-  if (res.code !== 200) return proxy.$message.error(res.message)
-  proxy.$message.success(res.message)
-  // 登录成功后按需跳转到不同主页
-  if (loginform.loginFlag === '1') {
-    // 存储userid，相当于token
-    window.sessionStorage.setItem('studentid', loginform.username)
-    router.push({ path: '/home' }).catch(() => { })
-  } else if (loginform.loginFlag === '2') {
-    router.push({ path: '/hometeacher' }).catch(() => { })
-    window.sessionStorage.setItem('teacherid', loginform.username)
-  } else {
-    router.push({ path: '/homemanager' }).catch(() => { })
-    window.sessionStorage.setItem('managerid', loginform.username)
-  }
-  console.log(res.data)
-}
-async function bind() {
-  const { data: res } = await proxy.$axios.post('bind/openid', {
-    account: loginform.username,
-    pwd: encrypt.Encrypt(loginform.password),
-    flag: loginform.loginFlag,
-    openid: window.sessionStorage.getItem('openid')
-  })
-  if (res.code !== 200) {
-    proxy.$message.error(res.message)
-  } else {
-    // proxy.$message.success(res.message)
-    login()
-  }
-}
-onMounted(() => {
-  data.flag = proxy.$store.state.wxlogintrigger
-  console.log(data.flag)
-})
-onUnmounted(() => {
-  proxy.$store.commit('savewxlogintrigger', 1)
-})
-
-</script> -->
 
 <style lang="less" scoped>
 .contrainer {
@@ -263,14 +197,13 @@ p {
     top: 0px;
     width: 40%;
     height: 40px;
-    background-color: pink;
   }
 
   .next {
     position: absolute;
     left: 270px;
     top: 0px;
-    width: 100px;
+    width: 110px;
     height: 40px;
     margin-left: 20px;
   }

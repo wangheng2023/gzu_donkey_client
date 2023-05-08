@@ -24,6 +24,14 @@ export default {
     indexTabs,
     searchDiv,
     hotRecom
+  },
+  data() {
+    return {
+    }
+  },
+  created() {
+  },
+  methods: {
   }
 }
 </script>

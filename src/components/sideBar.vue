@@ -1,21 +1,13 @@
 <template>
   <div>
     <div class="store_slier">
-      <!-- <el-collapse v-model="activeName" accordion>
-        <el-collapse-item :title="item.title" :name="index" v-for="(item, index) in storelist" :key="index">
-          <el-tag type="danger" v-for="(item1, index) in item.content" :key="index" style="margin: 10px 0 0 10px;">
-            <el-link type="danger" :underline="false" @click="toMore(item1)">
-              <label class="tags">{{ item1 }}</label> </el-link>
-          </el-tag>
-        </el-collapse-item>
-      </el-collapse> -->
       <h3>分类</h3>
       <ul>
-        <li v-for="(item, index) in testlist" :key="index" @click="jump(item)">
+        <li v-for="(item, index) in storelist" :key="index" @click="jump(item)">
           <span v-if="index % 3 == 0">
             <i :class="icon[index / 3]"></i>
           </span>
-          {{ item }} <label for=""> / </label>
+          {{ item.categoryName }}
         </li>
       </ul>
     </div>
@@ -35,13 +27,12 @@ export default {
         input: '',
         activeTab: ''
       },
-      icon: ['iconfont icon-xie', 'iconfont icon-jiafangjiashi ', 'iconfont icon-huazhuangpin', 'iconfont icon-shumashouji', 'iconfont icon-xiebao ', 'iconfont icon-nanzhuang'],
-      testlist: [1, 2, 3, 4, 5, 6, 7, 8, 9, 12, 13, 15, 41, 69, 8, 25, 26]
+      icon: ['iconfont icon-huazhuangpin', 'iconfont icon-jiafangjiashi ', 'iconfont icon-xie', 'iconfont icon-shumashouji', 'iconfont icon-xiebao ', 'iconfont icon-nanzhuang']
     }
   },
   methods: {
     jump(item) {
-      this.$router.push({ name: 'moregoods', params: { input: item } })
+      this.$router.push({ name: 'moregoods', query: { id: item.id, input: item.categoryName } })
       console.log(item)
     },
     // 子传父
@@ -59,7 +50,7 @@ export default {
 .store_slier {
   position: relative;
   float: left;
-  width: 250px;
+  width: 300px;
   height: 370px;
   border-radius: 12px;
   overflow: hidden;
@@ -69,7 +60,7 @@ export default {
 
   ul li {
     display: inline-block;
-    width: 60px;
+    width: 80px;
     margin-right: 10px;
     text-align: center;
     cursor: pointer;

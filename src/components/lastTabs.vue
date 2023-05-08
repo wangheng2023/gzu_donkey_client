@@ -8,16 +8,20 @@
         </div>
         <div class="search-box">
           <el-input placeholder="搜索商品名称" v-model="input">
-            <el-button slot="append" icon="el-icon-search"></el-button>
+            <el-button slot="append" icon="el-icon-search" @click="likeSearch('', input)"></el-button>
           </el-input>
         </div>
         <!-- <div style="font-size: 16px;margin-right: 20px; cursor: pointer; color: #f40;">全部商品</div> -->
       </div>
       <div style="background-color: #fff; border-radius: 20px; overflow: hidden;">
         <hotCard :hotlist="hotlist"></hotCard>
+        <div>
+          <el-empty v-if="total === 0" :image-size="200" description="暂无商品"></el-empty>
+        </div>
         <footer class="footer">
           <div class="fenye">
-            <el-pagination background layout="prev, pager, next" :total="500"></el-pagination>
+            <el-pagination @current-change="fenye" background layout="prev, pager, next" :total="total"
+              :page-size="pageSize" :current-page="currentPage"></el-pagination>
           </div>
         </footer>
       </div>
@@ -37,7 +41,10 @@ export default {
   },
   data() {
     return {
-      input: this.$route.params.input,
+      currentPage: 1,
+      pageSize: 12,
+      total: 0,
+      input: '' || this.$route.query.input,
       hotlist: [
         { img: 'https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png', price: '123元', decri: '好吃的大面筋，不一样的滋味，烤面筋，烤面筋，我的烤面筋' },
         { img: 'https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png', price: '123元', decri: '好吃的大面筋，不一样的滋味，烤面筋，烤面筋，我的烤面筋' },
@@ -53,9 +60,53 @@ export default {
         { img: 'https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png', price: '123元', decri: '好吃的大面筋，不一样的滋味，烤面筋，烤面筋，我的烤面筋' }]
     }
   },
+  created() {
+    if (this.$route.query.id) {
+      this.getJumpGoods()
+    }
+    if (this.$route.query.area) {
+      if (this.$route.query.area !== '5') {
+        this.likeSearch(this.$route.query.area, this.$route.query.input)
+      } else {
+        this.likeSearch('', this.$route.query.input)
+      }
+    }
+  },
   methods: {
     goBack() {
       this.$router.go(-1)
+    },
+    fenye(val) {
+      this.currentPage = val
+      this.getGoodlist()
+      console.log(this.currentPage)
+    },
+    // 跳转之后查询商品
+    async getJumpGoods() {
+      const { data: res } = await this.$axios.post('goods/getGoodsByCategory', {
+        categoryId: this.$route.query.id,
+        pageNo: this.currentPage,
+        pageSize: 12
+      })
+      console.log(res)
+      if (res.code === 200) {
+        this.hotlist = res.data.records
+        this.total = res.data.total
+        console.log(this.hotlist)
+      }
+    },
+    // 模糊搜索
+    async likeSearch(area, input) {
+      const { data: res } = await this.$axios.post('/goods/searchGoods', {
+        searchName: input,
+        campus: area,
+        pageNo: this.currentPage,
+        pageSize: this.pageSize
+      })
+      if (res.code === 200) {
+        this.hotlist = res.data.records
+        this.total = res.data.total
+      }
     }
   }
 }

@@ -1,12 +1,7 @@
 <template>
   <div>
     <div class="table-box">
-      <el-table ref="multipleTable" height="550" :data="tableData" tooltip-effect="dark"
-        @selection-change="handleSelectionChange">
-        <!-- <el-table-column type="selection" width="35">
-        </el-table-column> -->
-        <!-- <el-table-column label="全选" width="100">
-        </el-table-column> -->
+      <el-table ref="multipleTable" height="550" :data="tableData" tooltip-effect="dark">
         <el-table-column prop="img" label="商品信息" width="100">
           <template slot-scope="scope">
             <div>
@@ -21,7 +16,7 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column prop="goodprice" label="单价" show-overflow-tooltip>
+        <el-table-column prop="price" label="单价" show-overflow-tooltip>
         </el-table-column>
         <!-- <el-table-column prop="number" label="数量" width="150" show-overflow-tooltip>
           <template slot-scope="scope">
@@ -49,44 +44,47 @@
 </template>
 <script>
 export default {
+  props: {
+    tableData: {}
+  },
   data() {
     return {
       flag: 0, // 判断选中后不能修改数量
       goodtotal: 0,
       total: 0,
-      multipleSelection: [],
-      tableData: [
-        {
-          img: 'http://donkey.yuanyexiao.cn/user/image/default/191.png',
-          gooddecs: '烤面筋',
-          goodprice: '123',
-          number: 1
-        },
-        {
-          img: 'http://donkey.yuanyexiao.cn/user/image/default/591.png',
-          gooddecs: '烤面筋',
-          goodprice: '123',
-          number: 2
-        },
-        {
-          img: 'http://donkey.yuanyexiao.cn/user/image/default/101.png',
-          gooddecs: '烤面筋',
-          goodprice: '123',
-          number: 3
-        },
-        {
-          img: 'http://donkey.yuanyexiao.cn/user/image/default/199.png',
-          gooddecs: '烤面筋',
-          goodprice: '123',
-          number: 1
-        },
-        {
-          img: 'http://donkey.yuanyexiao.cn/user/image/default/300.png',
-          gooddecs: '烤面筋',
-          goodprice: '123',
-          number: 1
-        }
-      ]
+      multipleSelection: []
+      // tableData: [
+      //   {
+      //     img: 'http://donkey.yuanyexiao.cn/user/image/default/191.png',
+      //     gooddecs: '烤面筋',
+      //     goodprice: '123',
+      //     number: 1
+      //   },
+      //   {
+      //     img: 'http://donkey.yuanyexiao.cn/user/image/default/591.png',
+      //     gooddecs: '烤面筋',
+      //     goodprice: '123',
+      //     number: 2
+      //   },
+      //   {
+      //     img: 'http://donkey.yuanyexiao.cn/user/image/default/101.png',
+      //     gooddecs: '烤面筋',
+      //     goodprice: '123',
+      //     number: 3
+      //   },
+      //   {
+      //     img: 'http://donkey.yuanyexiao.cn/user/image/default/199.png',
+      //     gooddecs: '烤面筋',
+      //     goodprice: '123',
+      //     number: 1
+      //   },
+      //   {
+      //     img: 'http://donkey.yuanyexiao.cn/user/image/default/300.png',
+      //     gooddecs: '烤面筋',
+      //     goodprice: '123',
+      //     number: 1
+      //   }
+      // ]
     }
   },
   methods: {
@@ -121,7 +119,7 @@ export default {
 </script>
 <style lang="less" scoped>
 .table-box {
-  width: 600px;
+  width: 800px;
   //border: 1px solid #333;
   margin: 0 auto;
 }

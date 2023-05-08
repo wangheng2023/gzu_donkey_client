@@ -8,37 +8,41 @@
         </div>
         <div class="detail-box">
           <div class="goodtitle">
-            <h3>fghdjl当哈利;京东i撒v <label for="">123元</label></h3>
-            <span>2022.03.23 15:59 更新</span>
+            <h3>{{ goodinfo.goodsName }} &nbsp;&nbsp;<label for="">{{ goodinfo.cost }}元</label></h3>
+            <span>{{ goodinfo.modifiedTime }} 更新</span>
             <div class="shoucang">
               <div id="shoucang" @click="shoucang" style="font-size: 35px;margin-right: 10px;"
-                class="iconfont icon-31shoucang"></div>
-              <div id="word" style="margin-top: -10px;margin-left: 0px;">收藏</div>
+                class="iconfont icon-shoucang"></div>
+              <div id="word" style="width: 60px; text-align: center; margin-top: -10px;margin-left: -12px;">收藏</div>
             </div>
           </div>
           <div class="content">
             <zmdOthers :imglist="imglist"></zmdOthers>
             <div class="sellerinfo">
-              <div class="avatar">
-                <img src="https://www.pethome.com.cn/themes/chongwu/images/store/avatar.png" alt="">
+              <div class="avatar" @click="toUserinfo(userinfo.id)">
+                <img
+                  :src="userinfo.imageUrl ? userinfo.imageUrl : 'https://www.pethome.com.cn/themes/chongwu/images/store/avatar.png'"
+                  alt="">
               </div>
               <div class="login-info">
-                <span>Hi，欢迎来到黔驴二手商城!</span>
+                <span>{{ userinfo.nickName }}</span>
               </div>
               <div class="btn">
-                <div style="width: 50%;">东区</div>
-                <div style="width: 50%;">计算机科学与技术</div>
+                <div style="width: 50%;">{{ userCampus }}</div>
+                <div style="width: 50%;">{{ userinfo.departmentName }}</div>
               </div>
               <div class="lianxi">
-                <el-button type="danger" plain>联系我</el-button>
+                <el-button type="danger" plain @click="toMessage">联系我</el-button>
               </div>
             </div>
           </div>
         </div>
         <div class="tabs">
           <el-tabs type="border-card">
-            <el-tab-pane label="商品描述">商品描述</el-tab-pane>
-            <el-tab-pane label="评价">评价</el-tab-pane>
+            <el-tab-pane label="商品描述">{{ goodinfo.descript }}</el-tab-pane>
+            <el-tab-pane label="评价">
+              <goodEvaluate></goodEvaluate>
+            </el-tab-pane>
           </el-tabs>
         </div>
       </div>
@@ -48,16 +52,22 @@
 </template>
 <script>
 import footerDiv from '@/components/footerDiv.vue' // 引入底部模块
-import headerDiv from '@/components/headerDiv.vue'// 引入头部模块
+import headerDiv from '@/components/headerDiv.vue'// 引入头部模块 goodsPicInfos
 import zmdOthers from '@/components/zmdOthers.vue'
+import goodEvaluate from '@/components/goodEvaluate.vue'
 export default {
   components: {
     footerDiv,
     headerDiv,
-    zmdOthers
+    zmdOthers,
+    goodEvaluate
   },
   data() {
     return {
+      userid: '',
+      goodinfo: {},
+      userinfo: {},
+      userCampus: '',
       flag: 0,
       imglist: ['https://petweb1-1253856731.cos.ap-beijing.myqcloud.com/uploads/20190910/a22645df3f07d41cc351d33b75e26633.jpg',
         'https://petweb1-1253856731.cos.ap-beijing.myqcloud.com/uploads/20190910/d75bf4e276560d2590e94d1bb25ed672.jpg',
@@ -65,21 +75,82 @@ export default {
         'https://petweb1-1253856731.cos.ap-beijing.myqcloud.com/uploads/20190910/13652ba89cada9454f5d668741ccbbcb.jpg']
     }
   },
+  created() {
+    this.getgoodbyid()
+    this.isCollect()
+  },
   methods: {
     goBack() {
       this.$router.go(-1)
     },
-    shoucang() {
+    toMessage() {
+      this.$router.push({ name: 'mydialog' })
+    },
+    async shoucang() {
+      const id = this.$route.query.id
       const star = document.querySelector('#shoucang')
       const word = document.querySelector('#word')
-      if (this.flag === 0) {
-        star.className = 'iconfont icon-xihuanfill'
+      console.log(this.flag)
+      if (this.flag === 1) {
+        star.className = 'iconfont icon-shoucang1'
         word.innerHTML = '已收藏'
-        this.flag = 1
-      } else {
-        star.className = 'iconfont icon-31shoucang'
-        word.innerHTML = '收藏'
         this.flag = 0
+        const { data: res } = await this.$axios.get(`collect/cancelCollect?goodsId=${id}`)
+        if (res.code === 200) { this.isWhat() }
+      } else {
+        star.className = 'iconfont icon-shoucang'
+        word.innerHTML = '收藏'
+        this.flag = 1
+        const { data: res } = await this.$axios.get(`collect/addCollect?goodsId=${id}`)
+        if (res.code === 200) { this.isWhat() }
+      }
+    },
+    toUserinfo(val) {
+      this.$router.push({ name: 'userinfother', query: { id: val } })
+    },
+    // 根据id获得商品
+    async getgoodbyid() {
+      const id = this.$route.query.id
+      const { data: res } = await this.$axios.get(`goods/getGoodsVoById?goodsId=${id}`)
+      if (res.code === 200) {
+        this.goodinfo = res.data
+        this.userid = res.data.userId
+        this.getuserinfobyid()
+        const dateold = new Date(res.data.modifiedTime)
+        this.goodinfo.modifiedTime = dateold.toLocaleString()
+      }
+    },
+    // 查看是否收藏
+    async isCollect() {
+      const id = this.$route.query.id
+      const { data: res } = await this.$axios.get(`collect/isCollect?goodsId=${id}`)
+      if (res.code === 200) {
+        this.flag = res.isCollect
+        this.isWhat()
+      }
+    },
+    isWhat() {
+      const star = document.querySelector('#shoucang')
+      const word = document.querySelector('#word')
+      if (this.flag === 1) {
+        star.className = 'iconfont icon-shoucang1'
+        word.innerHTML = '已收藏'
+        // this.flag = 0
+      } else {
+        star.className = 'iconfont icon-shoucang'
+        word.innerHTML = '收藏'
+        // this.flag = 1
+      }
+    },
+    // 根据id获得用户信息
+    async getuserinfobyid() {
+      const { data: res } = await this.$axios.get(`user/getUserInfoVoById?userId=${this.userid}`)
+      if (res.code === 200) {
+        this.userinfo = res.data
+        if (this.userinfo.userCampus === 1) { this.userCampus = '北校区' }
+        if (this.userinfo.userCampus === 2) { this.userCampus = '西校区' }
+        if (this.userinfo.userCampus === 3) { this.userCampus = '东校区' }
+        if (this.userinfo.userCampus === 4) { this.userCampus = '南校区' }
       }
     }
   }
@@ -87,7 +158,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.icon-xihuanfill {
+.icon-shoucang1 {
   color: #ff5000;
 }
 
@@ -170,6 +241,11 @@ section {
         overflow: hidden;
         border-radius: 50%;
         background-color: pink;
+
+        img {
+          width: 80px;
+          height: 80px;
+        }
       }
 
       .login-info {

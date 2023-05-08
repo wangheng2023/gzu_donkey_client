@@ -45,6 +45,17 @@ export default {
     }
   },
   mounted() {
+  },
+  created() {
+    this.gethotList()
+  },
+  methods: {
+    async gethotList() {
+      const { data: res } = await this.$axios.get('goods/getGoodsNew')
+      if (res.code === 200) {
+        this.hotlist = res.data
+      }
+    }
   }
 }
 </script>

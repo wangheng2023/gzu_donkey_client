@@ -32,22 +32,20 @@ export default {
   },
   data() {
     return {
+      userinfo: { imageUrl: '', id: '' },
       searchlist: {
         input: '',
         activeTab: ''
       },
-      storelist: [
-        { title: '喵星馆', content: [111, 222, 333] },
-        { title: '汪星馆', content: [111, 222, 333] },
-        { title: '宠主馆', content: [111, 222, 333] }],
-      imglist: ['https://petweb1-1253856731.cos.ap-beijing.myqcloud.com/uploads/20190906/f1afc7510d4f471c55f0f361d3c50ac3.jpg',
-        'https://petweb1-1253856731.cos.ap-beijing.myqcloud.com/uploads/20190907/26c6dc50400e816a103d4b0bbe93a362.jpg',
-        'https://petweb1-1253856731.cos.ap-beijing.myqcloud.com/uploads/20190906/2641a1b38b98c85bb263bbee0f8e1d2e.jpg'],
-      noticelist: ['2022年5月20日，在贵州大学悦湖为流浪猫买猫粮花费30元',
-        '2022年12月12日在贵州民族大学为流浪猫买猫窝花费50元',
-        '2022年5月20日，在贵州大学悦湖为流浪猫买猫粮花费30元'
-      ]
+      imglist: ['https://petweb1-1253856731.cos.ap-beijing.myqcloud.com/uploads/20190910/a22645df3f07d41cc351d33b75e26633.jpg',
+        'https://petweb1-1253856731.cos.ap-beijing.myqcloud.com/uploads/20190910/d75bf4e276560d2590e94d1bb25ed672.jpg',
+        'https://petweb1-1253856731.cos.ap-beijing.myqcloud.com/uploads/20190910/c425f923549f1e940d80bedc42622dd3.jpg',
+        'https://petweb1-1253856731.cos.ap-beijing.myqcloud.com/uploads/20190910/13652ba89cada9454f5d668741ccbbcb.jpg'],
+      storelist: []
     }
+  },
+  created() {
+    this.getGoodClass()
   },
   methods: {
     login(e) {
@@ -61,6 +59,13 @@ export default {
       this.searchlist = val
       this.$emit('getActiveTab', this.searchlist)
       console.log('indextab', this.searchlist)
+    },
+    // 获取商品分类
+    async getGoodClass() {
+      const { data: res } = await this.$axios.get('goods/allCategory')
+      if (res.code === 200) {
+        this.storelist = res.data
+      }
     },
     toSaveDetail() {
       this.$router.push({ name: 'savedetail' })
@@ -89,12 +94,13 @@ main {
 
   .container-center {
     float: left;
-    width: 615px;
+    width: 570px;
     height: 370px;
-    margin-left: 15px;
+    margin-left: 10px;
     background-color: pink;
 
     img {
+      width: 580px;
       height: 370px;
     }
   }

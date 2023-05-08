@@ -113,7 +113,8 @@ export default {
   },
   methods: {
     async getCode() {
-      const res = await this.$axios.get('/admin/kaptcha', { responseType: 'blob' })
+      const timestamp = new Date().getTime()
+      const res = await this.$axios.get(`/kaptcha?a=${timestamp}`, { responseType: 'blob' })
       this.img = window.URL.createObjectURL(res.data)
     },
     resetForm(regform) {
@@ -122,7 +123,8 @@ export default {
     regSubmit(regform) {
       this.$refs[regform].validate((valid) => {
         if (valid) {
-          alert('submit!')
+          this.gufy()
+          // alert('submit!')
         } else {
           console.log('error submit!!')
           return false
@@ -130,6 +132,17 @@ export default {
       })
     },
     login() {
+      this.$router.push({ name: 'login' })
+    },
+    async gufy() {
+      const { data: res } = await this.$axios.post('/user/register', {
+        username: this.regform.username,
+        password: this.regform.checkPass,
+        code: this.regform.code
+      })
+      // console.log(loginform) /hometeacher
+      if (res.code !== 200) return this.$message.error(res.msg)
+      this.$message.success(res.msg)
       this.$router.push({ name: 'login' })
     }
   }
@@ -190,14 +203,13 @@ p {
     top: 0px;
     width: 40%;
     height: 40px;
-    background-color: pink;
   }
 
   .next {
     position: absolute;
     left: 270px;
     top: 0px;
-    width: 100px;
+    width: 110px;
     height: 40px;
     margin-left: 20px;
   }
