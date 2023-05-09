@@ -7,7 +7,7 @@
             <el-card :body-style="{ padding: '0px' }" shadow="hover">
               <img v-if="item.goodsPicInfos[0]?.isMaster === 1" :src="item.goodsPicInfos[0]?.picUrl" alt="加载失败"
                 class="image" />
-              <el-empty v-else :image-size="100" class="image"></el-empty>
+              <el-empty v-else description="暂无图片" :image-size="100" class="image"></el-empty>
               <div class="detail">
                 <h3>{{ item.goodsName }}</h3>
                 <span class="scrib">{{ item.descript }}</span>

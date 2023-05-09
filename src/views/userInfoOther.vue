@@ -137,20 +137,20 @@ export default {
         star.className = 'iconfont icon-xihuanfill'
         word.innerHTML = '已关注'
         this.flag = 1
-        const { data: res } = await this.$axios.get(`concern/cancelConcern?beFollowedId=${id}`)
-        if (res.code === 200) { this.isAttention() }
+        const { data: res } = await this.$axios.get(`concern/addConcern?beFollowedId=${id}`)
+        if (res.code === 200) { this.$message({ type: 'success', message: '关注成功' }); this.isAttention() }
       } else {
         star.className = 'iconfont icon-31guanzhu1'
         word.innerHTML = '关注'
         this.flag = 0
-        const { data: res } = await this.$axios.get(`concern/addConcern?beFollowedId=${id}`)
-        if (res.code === 200) { this.isAttention() }
+        const { data: res } = await this.$axios.get(`concern/cancelConcern?beFollowedId=${id}`)
+        if (res.code === 200) { this.$message({ type: 'success', message: res.msg }); this.isAttention() }
       }
     },
     isAttention() {
       const star = document.querySelector('#shoucang')
       const word = document.querySelector('#word')
-      if (this.flag === 0) {
+      if (this.flag === 1) {
         star.className = 'iconfont icon-xihuanfill'
         word.innerHTML = '已关注'
       } else {
@@ -164,6 +164,7 @@ export default {
       const { data: res } = await this.$axios.get(`concern/isConcern?beFollowedId=${id}`)
       if (res.code === 200) {
         this.flag = res.isConcern
+        console.log('1', this.flag)
         this.isAttention()
       }
     }

@@ -7,37 +7,39 @@
         </el-page-header>
       </div>
       <div class="tabs">
-        <el-tabs style="height: 550px;" type="border-card" tab-position="left">
-          <el-tab-pane v-for="(item, index) in perlist" :key="index">
+        <el-tabs style="height: 550px;" @tab-click="handleClick" type="border-card" v-model="activeName"
+          tab-position="left">
+          <el-tab-pane v-for="(item, index) in perlist" :key="index" :name="item.id + ''">
             <div slot="label">
               <div class="msgtitle">
-                <img :src="item.img" alt="">
+                <img :src="item.imageUrl" alt="">
                 <div class="title-right">
-                  <h3>{{ item.nikename }}</h3>
-                  <label for="">{{ change(item.time) }}</label>
-                  <span class="firstmsg">{{ item.first }}</span>
+                  <h3>{{ item.nickName }}</h3>
+                  <label for="">{{ change(item.modifiedTime) }}</label>
+                  <span class="firstmsg">{{ item.content }}</span>
                 </div>
               </div>
             </div>
             <div class="chatbox">
               <div class="chatbox_top">
                 <ul>
-                  <li v-for="(item, index) in perlist" :key="index">
+                  <li v-for="(item, index) in oneOfmessage" :key="index">
                     <div class="chatmsg">
                       <div class="chatmsg_top">
-                        <h3>{{ item.nikename }}</h3>
-                        <label for="">{{ item.time }}</label>
+                        <h3 :class="item.toId == userid ? 'me' : 'other'">{{ item.nickName }}</h3>
+                        <label :class="item.toId == userid ? 'me' : 'other'" for="">{{ change(item.modifiedTime)
+                        }}</label>
                       </div>
-                      <span>{{ item.first }}</span>
+                      <span>{{ item.content }}</span>
                     </div>
                   </li>
                 </ul>
               </div>
               <div class="chatbox_send">
-                <el-input type="textarea" :rows="3" placeholder="请输入内容" v-model="textarea">
+                <el-input id="input" type="textarea" :rows="3" placeholder="请输入内容" v-model="textarea">
                 </el-input>
                 <div class="btn">
-                  <el-button type="primary" plain>发送</el-button>
+                  <el-button type="primary" plain @click="sendMessage">发送</el-button>
                 </div>
               </div>
             </div>
@@ -59,6 +61,8 @@ export default {
   },
   data() {
     return {
+      userid: window.sessionStorage.getItem('userid'),
+      activeName: '',
       textarea: '',
       perlist: [
         {
@@ -85,8 +89,12 @@ export default {
           first: '不能再低了',
           time: '4.22'
         }
-      ]
+      ],
+      oneOfmessage: []
     }
+  },
+  created() {
+    this.getChatlist()
   },
   methods: {
     goBack() {
@@ -107,6 +115,30 @@ export default {
         const M = dateold.getMonth() + 1
         const D = dateold.getDate()
         return M + '.' + D
+      }
+    },
+    // 获得聊天列表
+    async getChatlist() {
+      const { data: res } = await this.$axios.get('message/messageList')
+      if (res.code === 200) {
+        this.perlist = res.data
+      }
+    },
+    async handleClick() {
+      console.log(this.activeName)
+      const id = parseInt(this.activeName)
+      const { data: res } = await this.$axios.get(`message/getUserAllMessage?toId=${id}`)
+      if (res.code === 200) {
+        this.oneOfmessage = res.data
+      }
+    },
+    async sendMessage() {
+      const { data: res } = await this.$axios.get(`message/send?toId=${this.activeName}&content=${this.textarea}`)
+      if (res.code === 200) {
+        const inp = document.getElementById('input')
+        inp.value = ''
+        this.handleClick()
+        this.getChatlist()
       }
     }
   }
@@ -190,6 +222,7 @@ export default {
     .chatbox_top {
       width: 100%;
       height: 75%;
+      overflow: scroll;
       //padding: 0 20px;
       //border: 1px solid #333;
 
@@ -207,13 +240,21 @@ export default {
           justify-content: left;
           font-size: 12px;
 
-          label {
-            margin-left: 20px;
+          .me {
+            color: #0000ff;
+          }
+
+          .other {
             color: #008040;
           }
 
+          label {
+            margin-left: 20px;
+            //color: #008040;
+          }
+
           h3 {
-            color: #0000ff;
+            //color: #0000ff;
           }
         }
       }

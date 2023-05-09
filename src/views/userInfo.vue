@@ -22,7 +22,7 @@
           </div>
           <div class="tags">其他信息：
             <el-tag v-if="userinfo.userStatus">{{ userinfo.userStatus }}</el-tag>&nbsp;
-            <el-tag v-if="userinfo.departmentName">{{ userinfo.departmentName }}</el-tag>&nbsp;
+            <el-tag v-if="userinfo.departmentInfoId">{{ departmentName }}</el-tag>&nbsp;
             <el-tag v-if="userinfo.userCampus">{{ userCampus }}</el-tag>
           </div>
         </div>
@@ -57,6 +57,7 @@ export default {
     return {
       userinfo: {},
       activeName: 'first',
+      departmentName: '',
       hotlist: [
         {
           img: 'https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png',
@@ -116,7 +117,15 @@ export default {
       const { data: res } = await this.$axios.get('/user/getCustomerInfo')
       if (res.code === 200) {
         this.userinfo = res.data
-        console.log('this.userinfo', res.data)
+        if (this.userinfo.userCampus === 1) { this.userCampus = '北校区' }
+        if (this.userinfo.userCampus === 2) { this.userCampus = '西校区' }
+        if (this.userinfo.userCampus === 3) { this.userCampus = '东校区' }
+        if (this.userinfo.userCampus === 4) { this.userCampus = '南校区' }
+        // departmentInfoId
+        const { data: res1 } = await this.$axios.get(`department/getDepartmentById?departmentId=${this.userinfo.departmentInfoId}`)
+        if (res1.code === 200) {
+          this.departmentName = res1.data.departmentName
+        }
       }
     }
   }

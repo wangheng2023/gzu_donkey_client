@@ -67,7 +67,7 @@ export default {
       } else if (val === 2) {
         this.$router.push({ name: 'mydialog' })
       } else if (val === 3) {
-        this.$router.push({ name: 'shopingcar' })
+        this.$router.push({ name: 'attentionpage' })
       } else {
         this.$router.push({ name: 'shopingcar' })
       }

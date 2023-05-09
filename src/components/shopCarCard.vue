@@ -2,40 +2,34 @@
   <div>
     <div class="table-box">
       <el-table ref="multipleTable" height="550" :data="tableData" tooltip-effect="dark">
-        <el-table-column prop="img" label="商品信息" width="100">
+        <el-table-column prop="img" label="商品信息" width="150">
           <template slot-scope="scope">
             <div>
-              <img style="height: 100px;" :src="scope.row.img" alt="">
+              <img style="height: 100px;" v-if="scope.row.goodsPicInfos[0]?.isMaster === 1"
+                :src="scope.row.goodsPicInfos[0]?.picUrl" alt="加载失败">
+              <el-empty v-else description="暂无图片" :image-size="50" style="width: 100px;height: 100px;"></el-empty>
             </div>
           </template>
         </el-table-column>
-        <el-table-column prop="gooddecs" width="300">
+        <el-table-column prop="goodsName" label="商品名" width="150">
           <template slot-scope="scope">
             <div>
-              <span>{{ scope.row.gooddecs }}</span>
+              <span>{{ scope.row.goodsName }}</span>
             </div>
           </template>
         </el-table-column>
-        <el-table-column prop="price" label="单价" show-overflow-tooltip>
-        </el-table-column>
-        <!-- <el-table-column prop="number" label="数量" width="150" show-overflow-tooltip>
-          <template slot-scope="scope">
-            <div class="number">
-              <el-input-number v-model="scope.row.number" :disabled="flag === 1 ? true : false" size="mini"
-                @change="handleChange(scope.row)" :min="1" :max="10" label="描述文字"></el-input-number>
-            </div>
-          </template>
-        </el-table-column>
-        <el-table-column prop="goodtotal" label="金额" width="120" show-overflow-tooltip>
+        <el-table-column prop="descript" label="商品描述" width="300">
           <template slot-scope="scope">
             <div>
-              <span style="color:#EE356C">{{ goodtotal=scope.row.number * scope.row.goodprice }}</span>
+              <span>{{ scope.row.descript }}</span>
             </div>
           </template>
-        </el-table-column> -->
-        <el-table-column label="操作">
+        </el-table-column>
+        <el-table-column prop="cost" label="单价" show-overflow-tooltip>
+        </el-table-column>
+        <el-table-column>
           <template slot-scope="scope">
-            <el-button size="mini" type="text" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+            <el-button size="mini" type="text" @click="handleDelete(scope.row)">取消收藏</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -44,52 +38,35 @@
 </template>
 <script>
 export default {
-  props: {
-    tableData: {}
-  },
+  // props: {
+  //   tableData: {}
+  // },
   data() {
     return {
       flag: 0, // 判断选中后不能修改数量
       goodtotal: 0,
       total: 0,
-      multipleSelection: []
-      // tableData: [
-      //   {
-      //     img: 'http://donkey.yuanyexiao.cn/user/image/default/191.png',
-      //     gooddecs: '烤面筋',
-      //     goodprice: '123',
-      //     number: 1
-      //   },
-      //   {
-      //     img: 'http://donkey.yuanyexiao.cn/user/image/default/591.png',
-      //     gooddecs: '烤面筋',
-      //     goodprice: '123',
-      //     number: 2
-      //   },
-      //   {
-      //     img: 'http://donkey.yuanyexiao.cn/user/image/default/101.png',
-      //     gooddecs: '烤面筋',
-      //     goodprice: '123',
-      //     number: 3
-      //   },
-      //   {
-      //     img: 'http://donkey.yuanyexiao.cn/user/image/default/199.png',
-      //     gooddecs: '烤面筋',
-      //     goodprice: '123',
-      //     number: 1
-      //   },
-      //   {
-      //     img: 'http://donkey.yuanyexiao.cn/user/image/default/300.png',
-      //     gooddecs: '烤面筋',
-      //     goodprice: '123',
-      //     number: 1
-      //   }
-      // ]
+      multipleSelection: [],
+      tableData: []
     }
   },
+  created() {
+    this.getCollect()
+  },
   methods: {
-    handleDelete(index, row) {
-      // console.log(index, row)
+    // 获得收藏列表
+    async getCollect() {
+      const { data: res } = await this.$axios.get('collect/allCollect')
+      if (res.code === 200) {
+        this.tableData = res.data
+      }
+    },
+    async handleDelete(row) {
+      const { data: res } = await this.$axios.get(`collect/cancelCollect?goodsId=${row.id}`)
+      if (res.code === 200) {
+        this.$message({ type: 'success', message: '已取消收藏' })
+        this.tableData = res.data || []
+      }
     },
     handleSelectionChange(val) {
       this.multipleSelection = val

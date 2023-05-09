@@ -9,14 +9,14 @@
             <el-page-header @back="goBack" style="margin-right: 10px;">
             </el-page-header>
           </div>
-          <el-input class="search" placeholder="搜索商品名称" v-model="input">
+          <el-input class="search" placeholder="请输入搜索内容" v-model="input">
             <el-button slot="append" icon="el-icon-search"></el-button>
           </el-input>
         </div>
         <el-divider><i class="el-icon-shopping-cart-full"></i></el-divider>
         <div class="title">
           <div class="tit-left">
-            我的收藏（全部 <label class="data" for="">{{ tableData.length }}</label> ）
+            我的关注（全部 <label class="data" for="">{{ tableData.length }}</label> ）
           </div>
           <!-- <div class="tit-right">
             <div style="font-size: 18px;">已选商品 <label class="data" for="">{{ total }}</label> 元</div>
@@ -28,34 +28,30 @@
         <!-- 购物车卡片 -->
         <div class="table-box">
           <el-table ref="multipleTable" height="550" :data="tableData" tooltip-effect="dark">
-            <el-table-column prop="img" label="商品信息" width="150">
+            <el-table-column prop="img" label="头像" width="150">
               <template slot-scope="scope">
                 <div>
-                  <img style="height: 100px;" v-if="scope.row.goodsPicInfos[0]?.isMaster === 1"
-                    :src="scope.row.goodsPicInfos[0]?.picUrl" alt="加载失败">
-                  <el-empty v-else description="暂无图片" :image-size="50" style="width: 100px;height: 100px;"></el-empty>
+                  <img style="height: 100px;" :src="scope.row.imageUrl" alt="">
                 </div>
               </template>
             </el-table-column>
-            <el-table-column prop="goodsName" label="商品名" width="150">
+            <el-table-column label="昵称" prop="nickName" width="150">
               <template slot-scope="scope">
                 <div>
-                  <span>{{ scope.row.goodsName }}</span>
+                  <span>{{ scope.row.nickName }}</span>
                 </div>
               </template>
             </el-table-column>
-            <el-table-column prop="descript" label="商品描述" width="300">
+            <el-table-column label="个性签名" prop="signature" width="300">
               <template slot-scope="scope">
                 <div>
-                  <span>{{ scope.row.descript }}</span>
+                  <span>{{ scope.row.signature }}</span>
                 </div>
               </template>
-            </el-table-column>
-            <el-table-column prop="cost" label="单价" show-overflow-tooltip>
             </el-table-column>
             <el-table-column>
               <template slot-scope="scope">
-                <el-button size="mini" type="text" @click="handleDelete(scope.row)">取消收藏</el-button>
+                <el-button size="mini" type="text" @click="handleDelete(scope.row)">取消</el-button>
               </template>
             </el-table-column>
           </el-table>
@@ -78,6 +74,45 @@ export default {
     return {
       input: '',
       tableData: []
+      // [
+      //   {
+      //     img: 'http://donkey.yuanyexiao.cn/user/image/default/191.png',
+      //     gooddecs: '烤面筋',
+      //     goodprice: '123',
+      //     number: 1
+      //   },
+      //   {
+      //     img: 'http://donkey.yuanyexiao.cn/user/image/default/591.png',
+      //     gooddecs: '烤面筋',
+      //     goodprice: '123',
+      //     number: 2
+      //   },
+      //   {
+      //     img: 'http://donkey.yuanyexiao.cn/user/image/default/101.png',
+      //     gooddecs: '烤面筋',
+      //     goodprice: '123',
+      //     number: 3
+      //   },
+      //   {
+      //     img: 'http://donkey.yuanyexiao.cn/user/image/default/199.png',
+      //     gooddecs: '烤面筋',
+      //     goodprice: '123',
+      //     number: 1
+      //   },
+      //   {
+      //     img: 'http://donkey.yuanyexiao.cn/user/image/default/300.png',
+      //     gooddecs: '烤面筋',
+      //     goodprice: '123',
+      //     number: 1
+      //   }
+      // ]
+    }
+  },
+  watch: {
+    tableData: {
+      handler(newVal, oldVal) {
+
+      }
     }
   },
   created() {
@@ -87,18 +122,18 @@ export default {
     goBack() {
       this.$router.go(-1)
     },
-    // 获得收藏列表
+    // 获得关注列表
     async getCollect() {
-      const { data: res } = await this.$axios.get('collect/allCollect')
+      const { data: res } = await this.$axios.get('concern/allConcernList')
       if (res.code === 200) {
-        this.tableData = res.data
+        this.tableData = res.data || []
       }
     },
-    async handleDelete(row) {
-      const { data: res } = await this.$axios.get(`collect/cancelCollect?goodsId=${row.id}`)
+    async handleDelete(item) {
+      const { data: res } = await this.$axios.get(`concern/cancelConcern?beFollowedId=${item.id}`)
       if (res.code === 200) {
-        this.$message({ type: 'success', message: '已取消收藏' })
-        this.tableData = res.data || []
+        this.$message({ type: 'success', message: res.msg })
+        this.getCollect()
       }
     }
   }
@@ -107,12 +142,6 @@ export default {
 <style lang="less" scoped>
 section {
   height: 750px;
-}
-
-.table-box {
-  width: 800px;
-  //border: 1px solid #333;
-  margin: 0 auto;
 }
 
 .pageHead {
@@ -185,5 +214,11 @@ section {
       font-weight: 600;
     }
   }
+}
+
+.table-box {
+  width: 800px;
+  //border: 1px solid #333;
+  margin: 0 auto;
 }
 </style>

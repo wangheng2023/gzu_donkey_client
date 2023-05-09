@@ -137,6 +137,7 @@ export default {
       // console.log(loginform) /hometeacher
       if (res.code !== 200) return this.$message.error(res.msg)
       this.$message.success(res.msg)
+      window.sessionStorage.setItem('userid', res.data.id)
       this.$router.push({ name: 'index', query: { id: res.data.id } })
     }
   }

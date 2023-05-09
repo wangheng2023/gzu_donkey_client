@@ -96,13 +96,13 @@ export default {
         word.innerHTML = '已收藏'
         this.flag = 0
         const { data: res } = await this.$axios.get(`collect/cancelCollect?goodsId=${id}`)
-        if (res.code === 200) { this.isWhat() }
+        if (res.code === 200) { this.$message({ type: 'success', message: '已取消收藏' }); this.isWhat() }
       } else {
         star.className = 'iconfont icon-shoucang'
         word.innerHTML = '收藏'
         this.flag = 1
         const { data: res } = await this.$axios.get(`collect/addCollect?goodsId=${id}`)
-        if (res.code === 200) { this.isWhat() }
+        if (res.code === 200) { this.$message({ type: 'success', message: '收藏成功' }); this.isWhat() }
       }
     },
     toUserinfo(val) {
@@ -241,6 +241,7 @@ section {
         overflow: hidden;
         border-radius: 50%;
         background-color: pink;
+        cursor: pointer;
 
         img {
           width: 80px;

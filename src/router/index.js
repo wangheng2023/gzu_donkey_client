@@ -16,6 +16,7 @@ const routes = [
   { path: '/userinfo', name: 'userinfo', component: () => import('@/views/userInfo.vue') },
   { path: '/userinfother', name: 'userinfother', component: () => import('@/views/userInfoOther.vue') },
   { path: '/shopingcar', name: 'shopingcar', component: () => import('@/views/shopingCar.vue') },
+  { path: '/attentionpage', name: 'attentionpage', component: () => import('@/views/AttentionPage.vue') },
   { path: '/mydialog', name: 'mydialog', component: () => import('@/views/myDialog.vue') },
   { path: '/accountset', name: 'accountset', component: () => import('@/views/accountSet.vue') },
   { path: '/pubgood', name: 'pubgood', component: () => import('@/views/pubGood.vue') }

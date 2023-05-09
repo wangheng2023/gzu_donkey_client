@@ -6,7 +6,7 @@
           <div class="tx">
             <div class="avatar"><img :src="img" alt=""></div>
             <div class="btn">
-              <el-button type="primary" plain size="mini" @click="getSJimg">随机</el-button>
+              <el-button type="primary" plain size="mini" @click="getSJimg">随 机</el-button>
               <twoUploadSmall @uploadSuccess="uploadPicSuccess"></twoUploadSmall>
             </div>
           </div>
