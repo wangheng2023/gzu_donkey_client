@@ -103,6 +103,7 @@ export default {
   },
   created() {
     this.getUserInfo()
+    this.getgoodsbyid()
   },
   methods: {
     changeuserinfo() { },
@@ -126,6 +127,14 @@ export default {
         if (res1.code === 200) {
           this.departmentName = res1.data.departmentName
         }
+      }
+    },
+    // 根据用户id获得用户发布信息
+    async getgoodsbyid() {
+      const id = window.sessionStorage.getItem('userid')
+      const { data: res } = await this.$axios.get(`/goods/getGoodsVoByUserId?userId=${id}`)
+      if (res.code === 200) {
+        this.hotlist = res.data
       }
     }
   }

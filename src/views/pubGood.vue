@@ -101,6 +101,7 @@ export default {
         const { data: res } = await this.$axios.post('goods/addGoods', this.form)
         if (res.code === 200) {
           this.$message({ type: 'success', message: res.msg })
+          this.$router.push({ name: 'index' })
         } else {
           this.$message({ type: 'info', message: res.msg })
         }

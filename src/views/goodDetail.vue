@@ -32,7 +32,7 @@
                 <div style="width: 50%;">{{ userinfo.departmentName }}</div>
               </div>
               <div class="lianxi">
-                <el-button type="danger" plain @click="toMessage">联系我</el-button>
+                <el-button type="danger" :disabled="isDisabled" plain @click="toMessage">联系我</el-button>
               </div>
             </div>
           </div>
@@ -69,6 +69,7 @@ export default {
       userinfo: {},
       userCampus: '',
       flag: 0,
+      isDisabled: false,
       imglist: ['https://petweb1-1253856731.cos.ap-beijing.myqcloud.com/uploads/20190910/a22645df3f07d41cc351d33b75e26633.jpg',
         'https://petweb1-1253856731.cos.ap-beijing.myqcloud.com/uploads/20190910/d75bf4e276560d2590e94d1bb25ed672.jpg',
         'https://petweb1-1253856731.cos.ap-beijing.myqcloud.com/uploads/20190910/c425f923549f1e940d80bedc42622dd3.jpg',
@@ -78,8 +79,15 @@ export default {
   created() {
     this.getgoodbyid()
     this.isCollect()
+    this.isDisable()
   },
   methods: {
+    isDisable() {
+      const user = window.sessionStorage.getItem('userid')
+      if (this.userinfo.id === user) {
+        this.isDisabled = true
+      } else { this.isDisabled = false }
+    },
     goBack() {
       this.$router.go(-1)
     },

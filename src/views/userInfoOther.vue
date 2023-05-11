@@ -25,7 +25,7 @@
             </div>
           </div>
           <div class="tags">其他信息：
-            <el-tag v-if="userinfo.userStatus">{{ userinfo.userStatus }}</el-tag>&nbsp;
+            <!-- <el-tag v-if="userinfo.userStatus">{{ userinfo.userStatus }}</el-tag>&nbsp; -->
             <el-tag v-if="userinfo.departmentName">{{ userinfo.departmentName }}</el-tag>&nbsp;
             <el-tag v-if="userinfo.userCampus">{{ userCampus }}</el-tag>
           </div>
@@ -108,6 +108,7 @@ export default {
   created() {
     this.getuserinfobyid()
     this.isCollect()
+    this.getgoodsbyid()
   },
   methods: {
     changeuserinfo() { },
@@ -127,6 +128,14 @@ export default {
         if (this.userinfo.userCampus === 2) { this.userCampus = '西校区' }
         if (this.userinfo.userCampus === 3) { this.userCampus = '东校区' }
         if (this.userinfo.userCampus === 4) { this.userCampus = '南校区' }
+      }
+    },
+    // 根据用户id获得用户发布信息
+    async getgoodsbyid() {
+      const id = this.$route.query.id
+      const { data: res } = await this.$axios.get(`/goods/getGoodsVoByUserId?userId=${id}`)
+      if (res.code === 200) {
+        this.hotlist = res.data
       }
     },
     async attention() {

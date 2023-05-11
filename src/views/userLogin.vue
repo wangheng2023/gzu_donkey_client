@@ -8,6 +8,10 @@
       </div>
       <!-- 登录表单、添加ref来获取表单实例，用于重置和表单预验证 -->
       <el-form label-width="0px" ref="loginform" :rules="rules" :model="loginform" class="form_box">
+        <el-form-item prop="username">
+          <el-radio v-model="loginform.radio" label="1">我是管理员</el-radio>
+          <el-radio v-model="loginform.radio" label="2">我是普通用户</el-radio>
+        </el-form-item>
         <!-- 用户名 -->
         <el-form-item prop="username">
           <el-input size="large" v-model="loginform.username" placeholder="请输入用户名" prefix-icon="el-icon-user"
@@ -118,15 +122,25 @@ export default {
       this.$refs[loginform].resetFields()
     },
     login(loginform) {
-      this.$refs[loginform].validate((valid) => {
+      this.$refs[loginform].validate(async (valid) => {
         if (valid) {
           // 获取后端反馈
-          // const loginform1 = JSON.parse(JSON.stringify(loginform))
-          this.gufy()
-          // window.sessionStorage.setItem('activeTab', 'first')
+          if (this.loginform.radio === '2') { this.gufy() }
+          if (this.loginform.radio === '1') {
+            const { data: res } = await this.$axios.post('/admin/login', {
+              username: this.loginform.username,
+              password: this.loginform.pass,
+              code: this.loginform.code
+            })
+            if (res.code === 200) {
+              this.$message.success(res.msg)
+              this.$router.push({ name: 'homemanager' })
+            } else {
+              this.$message.error(res.msg)
+            }
+          }
         }
       })
-      // console.log(res.data)
     },
     async gufy() {
       const { data: res } = await this.$axios.post('user/login', {
@@ -134,11 +148,12 @@ export default {
         password: this.loginform.pass,
         code: this.loginform.code
       })
-      // console.log(loginform) /hometeacher
       if (res.code !== 200) return this.$message.error(res.msg)
-      this.$message.success(res.msg)
-      window.sessionStorage.setItem('userid', res.data.id)
-      this.$router.push({ name: 'index', query: { id: res.data.id } })
+      if (res.code === 200) {
+        this.$message.success(res.msg)
+        window.sessionStorage.setItem('userid', res.data.id)
+        this.$router.push({ name: 'index', query: { id: res.data.id } })
+      }
     }
   }
 }
@@ -155,7 +170,7 @@ export default {
     left: 50%;
     transform: translate(-50%, -50%);
     width: 470px;
-    height: 350px;
+    height: 380px;
     background-color: #fff;
     border-radius: 10px;
 
@@ -189,7 +204,7 @@ p {
   position: absolute;
   bottom: 10px;
   width: 100%;
-  height: 250px;
+  height: 300px;
   padding: 0 30px;
 
   .codes {

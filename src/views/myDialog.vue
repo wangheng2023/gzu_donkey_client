@@ -106,14 +106,14 @@ export default {
       const str = new Date(date)
       // console.log(str)
       if (str.getMonth() === dateold.getMonth() && str.getDate() === dateold.getDate()) {
-        const h = dateold.getHours() + ':'
-        const m = dateold.getMinutes()
+        const h = dateold.getHours() < 10 ? '0' + dateold.getHours() : dateold.getHours() + ':'
+        const m = dateold.getMinutes() < 10 ? '0' + dateold.getMinutes() : dateold.getMinutes()
         return h + m
       } else if (str.getMonth() === dateold.getMonth() && str.getDate() - dateold.getDate() === 1) {
         return '昨天'
       } else {
-        const M = dateold.getMonth() + 1
-        const D = dateold.getDate()
+        const M = (dateold.getMonth() + 1) < 10 ? '0' + (dateold.getMonth() + 1) : (dateold.getMonth() + 1)
+        const D = dateold.getDate() < 10 ? '0' + dateold.getDate() : dateold.getDate()
         return M + '.' + D
       }
     },
