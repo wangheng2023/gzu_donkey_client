@@ -2,7 +2,7 @@
   <div>
     <div class="w search-box">
       <div class="search-left">
-        <img src="http://donkey.yuanyexiao.cn/user/image/default/551.png" alt="">
+        <img style="height: 150px; margin-top: -20px;" src="../../public/removebg.png" alt="">
       </div>
       <div class="search-right">
         <div class="search-input">

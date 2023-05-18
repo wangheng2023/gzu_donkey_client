@@ -1,7 +1,7 @@
 <template>
   <!-- 面包屑 -->
   <div>
-    <el-breadcrumb separator-icon="ArrowRight">
+    <el-breadcrumb separator-icon="ArrowRight" style="margin-bottom: 10px;">
       <el-breadcrumb-item :to="{ path: '/managerorder' }">分类管理</el-breadcrumb-item>
       <el-breadcrumb-item>分类信息</el-breadcrumb-item>
     </el-breadcrumb>
@@ -23,7 +23,7 @@
         </el-row>
       </div>
       <!-- 表单内容 -->
-      <el-table :data="teacherlist" height="450px" style="width: 100%">
+      <el-table :data="teacherlist" height="500px" style="width: 100%">
         <el-table-column type="index" width="70" />
         <el-table-column prop="categoryName" label="分类名称" />
         <el-table-column label="操作" width="200">
