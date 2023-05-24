@@ -151,8 +151,9 @@ export default {
       if (res.code !== 200) return this.$message.error(res.msg)
       if (res.code === 200) {
         this.$message.success(res.msg)
-        window.sessionStorage.setItem('userid', res.data.id)
-        this.$router.push({ name: 'index', query: { id: res.data.id } })
+        // window.sessionStorage.setItem('userid', res.data.id)
+        this.$router.push({ name: 'index' })
+        // , query: { id: res.data.id }
       }
     }
   }

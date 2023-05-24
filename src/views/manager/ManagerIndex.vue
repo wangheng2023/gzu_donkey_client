@@ -1,7 +1,7 @@
 <template>
   <!-- 面包屑 -->
   <div>
-    <el-breadcrumb separator-icon="ArrowRight">
+    <el-breadcrumb separator-icon="ArrowRight" style="margin-bottom: 10px;">
       <el-breadcrumb-item :to="{ path: '/managerorder' }">学院管理</el-breadcrumb-item>
       <el-breadcrumb-item>学院信息</el-breadcrumb-item>
     </el-breadcrumb>

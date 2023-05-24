@@ -8,6 +8,7 @@ import managerindex from '@/views/manager/ManagerIndex.vue'
 import manageclass from '@/views/manager/manageClass.vue'
 import managestudent from '@/views/manager/manageStudent.vue'
 import manageteacher from '@/views/manager/manageTeacher.vue'
+import manageinsider from '@/views/manager/manageInsider.vue'
 
 Vue.use(VueRouter)
 
@@ -35,7 +36,8 @@ const routes = [
       { path: '/managerorder', name: 'managerorder', component: managerindex },
       { path: '/manageclass', name: 'manageclass', component: manageclass },
       { path: '/manageuser', name: 'manageuser', component: managestudent },
-      { path: '/managegood', name: 'managegood', component: manageteacher }
+      { path: '/managegood', name: 'managegood', component: manageteacher },
+      { path: '/manageinsider', name: 'manageinsider', component: manageinsider }
     ]
   }
 ]

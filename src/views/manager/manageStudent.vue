@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- 面包屑 -->
-    <el-breadcrumb separator-icon="ArrowRight">
+    <el-breadcrumb separator-icon="ArrowRight" style="margin-bottom: 10px;">
       <el-breadcrumb-item :to="{ path: '/managestudent' }">用户管理</el-breadcrumb-item>
       <el-breadcrumb-item>用户信息</el-breadcrumb-item>
     </el-breadcrumb>
