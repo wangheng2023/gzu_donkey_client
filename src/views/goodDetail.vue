@@ -79,14 +79,20 @@ export default {
   created() {
     this.getgoodbyid()
     this.isCollect()
-    this.isDisable()
+    // this.isDisable()
   },
   methods: {
     isDisable() {
       const user = window.sessionStorage.getItem('userid')
-      if (this.userinfo.id === user) {
+      console.log('mainuserid', user)
+      console.log(this.userid)
+      if (this.userid - 0 === user - 0) {
+        console.log(true)
         this.isDisabled = true
-      } else { this.isDisabled = false }
+      } else {
+        this.isDisabled = false
+        console.log(false)
+      }
     },
     goBack() {
       this.$router.go(-1)
@@ -125,6 +131,7 @@ export default {
         this.userid = res.data.userId
         this.imglist = res.data.goodsPicInfos
         this.getuserinfobyid()
+        this.isDisable()
         const dateold = new Date(res.data.modifiedTime)
         this.goodinfo.modifiedTime = dateold.toLocaleString()
       }
