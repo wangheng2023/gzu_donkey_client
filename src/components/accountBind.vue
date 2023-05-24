@@ -12,29 +12,96 @@
                   <div class="content">
                     {{ item.cate }}
                   </div>
-                  123456
+                  {{ item.number }}
                 </div>
               </div>
               <div class="btn">
-                <el-button type="text">修改</el-button>
+                <el-button @click="openDialog(item.cate)" type="text">修改</el-button>
               </div>
-
             </div>
           </li>
         </ul>
       </div>
     </div>
+    <!-- 手机号修改框 -->
+    <el-dialog :visible.sync="dialogVisible" title="修改" width="50%" @close="resetform1">
+      <el-form ref="ruleFormRef1" :model="form" :rules="rules" label-width="120px" status-icon>
+        <el-form-item label="手机号" prop="title">
+          <el-input v-model="form.phone" />
+        </el-form-item>
+      </el-form>
+      <template #footer>
+        <span class="dialog-footer">
+          <el-button @click="dialogVisible = false">取消</el-button>
+          <el-button type="primary" @click="sureadd">确定</el-button>
+        </span>
+      </template>
+    </el-dialog>
+    <!-- 邮箱修改框 -->
+    <el-dialog :visible.sync="dialogVisible1" title="修改" width="50%" @close="resetform2">
+      <el-form ref="ruleFormRef2" :model="form" :rules="rules" label-width="120px" status-icon>
+        <el-form-item label="邮箱" prop="title">
+          <el-input v-model="form.email" />
+        </el-form-item>
+      </el-form>
+      <template #footer>
+        <span class="dialog-footer">
+          <el-button @click="dialogVisible1 = false">取消</el-button>
+          <el-button type="primary" @click="sureadd">确定</el-button>
+        </span>
+      </template>
+    </el-dialog>
+    <!-- 修改密码 -->
+    <el-dialog width="30%" title="修改密码" :visible.sync="dialogVisible2" @close="resetform3">
+      <el-form label-width="0px" ref="regform" :rules="rules" :model="form" class="form_box">
+        <el-form-item prop="oldpass">
+          <el-input size="large" v-model="form.oldpass" placeholder="请输入旧密码" prefix-icon="iconfont icon-yewuquanxian"
+            clearable></el-input>
+        </el-form-item>
+        <!-- 密码 -->
+        <el-form-item prop="pass">
+          <el-input size="large" v-model="form.pass" placeholder="请输入新密码" prefix-icon="el-icon-key" show-password>
+          </el-input>
+        </el-form-item>
+        <!-- 二次密码 -->
+        <el-form-item prop="checkPass">
+          <el-input size="large" v-model="form.checkPass" placeholder="请再次输入新密码" prefix-icon="el-icon-key" show-password>
+          </el-input>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" @click="submitFormPass('ruleForm')">修改</el-button>
+          <el-button @click="resetForm('ruleForm')">重置</el-button>
+        </el-form-item>
+      </el-form>
+    </el-dialog>
   </div>
 </template>
 <script>
 export default {
   data() {
     return {
+      dialogVisible: false,
+      dialogVisible1: false,
+      dialogVisible2: false,
+      form: {
+        phone: '', // 修改手机号
+        email: '', // 修改邮箱
+        oldpass: '',
+        pass: '',
+        checkPass: ''
+      },
       zhlist: [
-        { cate: '手机号' },
-        { cate: '邮箱' },
-        { cate: '密码' }
+        { cate: '手机号', number: '187****2917' },
+        { cate: '邮箱', number: '298******@qq.com' },
+        { cate: '密码', number: '******' }
       ]
+    }
+  },
+  methods: {
+    openDialog(item) {
+      if (item === '手机号') { this.dialogVisible = true }
+      if (item === '邮箱') { this.dialogVisible1 = true }
+      if (item === '密码') { this.dialogVisible2 = true }
     }
   }
 }

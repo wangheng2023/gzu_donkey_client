@@ -3,7 +3,7 @@
     <el-upload ref="upload" :action="upload_qiniu_area" :auto-upload="true" accept="image/jpg,image/png,image/jpeg"
       :show-file-list="false" list-type="text" :before-upload="beforePicUpload" :http-request="uploadQiniu">
       <!-- <el-button plain type="primary" class="buttonupload" @click="submitUpload">上传图片</el-button> -->
-      <el-button plain size="mini" type="primary">自定义</el-button>
+      <el-button plain size="mini" type="primary">上 传</el-button>
     </el-upload>
   </div>
 </template>
