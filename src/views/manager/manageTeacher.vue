@@ -71,7 +71,7 @@
               </el-button> -->
               <el-button v-if="scope.row.publishStatus === 1" size="mini" type="danger" @click="myDelete(scope.row)">下架
               </el-button>
-              <el-button v-if="scope.row.publishStatus === 2" size="mini" type="success" @click="myNoDelete(scope.row)">上架
+              <el-button v-if="scope.row.publishStatus === 0" size="mini" type="success" @click="myNoDelete(scope.row)">上架
               </el-button>
             </template>
           </el-table-column>

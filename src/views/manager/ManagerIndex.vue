@@ -31,7 +31,7 @@
         </el-row>
       </div>
       <!-- 表单内容 -->
-      <el-table :data="teacherlist" height="450px" style="width: 100%">
+      <el-table :data="teacherlist" height="480px" style="width: 100%">
         <el-table-column type="index" width="70" />
         <el-table-column prop="departmentCampus" label="所在校区">
           <template #default="scope">

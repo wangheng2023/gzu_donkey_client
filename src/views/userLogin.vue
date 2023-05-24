@@ -1,42 +1,47 @@
 <template>
   <div class="bd">
     <div class="contrainer">
-      <!-- 登录框 -->
-      <div class="login_box">
-        <!-- 登录头像 -->
-        <!-- <div class="avatar_box">
+      <div class="top">
+        <img style="height: 150px; margin-top: -20px;" src="../../public/removebg.png" alt="">
+      </div>
+      <div class="center">
+        <!-- 登录框 -->
+        <div class="login_box">
+          <!-- 登录头像 -->
+          <!-- <div class="avatar_box">
           <img src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png" alt="">
         </div> -->
-        <!-- 登录表单、添加ref来获取表单实例，用于重置和表单预验证 -->
-        <el-form label-width="0px" ref="loginform" :rules="rules" :model="loginform" class="form_box">
-          <el-form-item prop="username">
-            <el-radio v-model="loginform.radio" label="1">我是管理员</el-radio>
-            <el-radio v-model="loginform.radio" label="2">我是普通用户</el-radio>
-          </el-form-item>
-          <!-- 用户名 -->
-          <el-form-item prop="username">
-            <el-input size="large" v-model="loginform.username" placeholder="请输入用户名" prefix-icon="el-icon-user"
-              clearable></el-input>
-          </el-form-item>
-          <!-- 密码 -->
-          <el-form-item prop="pass">
-            <el-input size="large" v-model="loginform.pass" placeholder="请输入密码" prefix-icon="el-icon-key" show-password>
-            </el-input>
-          </el-form-item>
-          <el-form-item prop="code" style="width: 40%;">
-            <el-input size="large" v-model="loginform.code" placeholder="请输入验证码"></el-input>
-            <div class="codes"><img :src="img" alt=""></div>
-            <div class="next" @click="getCode()"><a href="#">看不清？换一张</a></div>
-          </el-form-item>
-          <el-form-item class="btn">
-            <el-button type="primary" @click="login('loginform')">登录</el-button>
-            <el-button type="info" @click="resetForm('loginform')">重置</el-button>
-          </el-form-item>
-          <!-- 文字按钮区 -->
-          <el-form-item class="btnword">
-            <el-button type="info" text @click="toReg">去注册</el-button>
-          </el-form-item>
-        </el-form>
+          <!-- 登录表单、添加ref来获取表单实例，用于重置和表单预验证 -->
+          <el-form label-width="0px" ref="loginform" :rules="rules" :model="loginform" class="form_box">
+            <el-form-item prop="username">
+              <el-radio v-model="loginform.radio" label="1">管理员</el-radio>
+              <el-radio v-model="loginform.radio" label="2">普通用户</el-radio>
+            </el-form-item>
+            <!-- 用户名 -->
+            <el-form-item prop="username">
+              <el-input size="large" v-model="loginform.username" placeholder="请输入用户名" prefix-icon="el-icon-user"
+                clearable></el-input>
+            </el-form-item>
+            <!-- 密码 -->
+            <el-form-item prop="pass">
+              <el-input size="large" v-model="loginform.pass" placeholder="请输入密码" prefix-icon="el-icon-key" show-password>
+              </el-input>
+            </el-form-item>
+            <el-form-item prop="code" style="width: 40%;">
+              <el-input size="large" v-model="loginform.code" placeholder="请输入验证码"></el-input>
+              <div class="codes"><img :src="img" alt=""></div>
+              <div class="next" @click="getCode()"><a href="#">看不清？换一张</a></div>
+            </el-form-item>
+            <el-form-item class="btn">
+              <el-button type="primary" @click="login('loginform')">登录</el-button>
+              <el-button type="info" @click="resetForm('loginform')">重置</el-button>
+            </el-form-item>
+            <!-- 文字按钮区 -->
+            <el-form-item class="btnword">
+              <el-button type="info" text @click="toReg">去注册</el-button>
+            </el-form-item>
+          </el-form>
+        </div>
       </div>
     </div>
   </div>
@@ -193,6 +198,10 @@ export default {
     background-size: 100% 100%;
     border-radius: 10px;
 
+    a {
+      color: #fff;
+    }
+
     .avatar_box {
       position: absolute;
       left: 50%;
@@ -251,6 +260,10 @@ p {
     position: relative;
     left: 260px;
   }
+
+  // :deep(.el-radio__label) {
+  //   color: #fff;
+  // }
 
   .btnword button {
     margin-top: -65px;

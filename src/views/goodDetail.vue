@@ -32,7 +32,10 @@
                 <div style="width: 50%;">{{ userinfo.departmentName }}</div>
               </div>
               <div class="lianxi">
-                <el-button type="danger" :disabled="isDisabled" plain @click="toMessage">联系我</el-button>
+                <el-button type="danger" :disabled="isDisabled" plain @click="toMessage">联系我</el-button><br>
+                <div style="margin-top: 8px;"></div>
+                <el-button v-if="isDisabled" type="danger" plain>下架该商品</el-button>
+                <el-button v-else type="danger" plain>拍下宝贝</el-button>
               </div>
             </div>
           </div>

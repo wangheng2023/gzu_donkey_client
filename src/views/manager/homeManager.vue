@@ -35,7 +35,7 @@
       </el-aside>
       <el-container>
         <!-- 头部区域 -->
-        <el-header>
+        <el-header style="margin:8px 20px 0 20px;border-radius: 5px;">
           <span>黔驴二手交易平台</span>
           <div>
             <span>管理员，欢迎您！</span>
