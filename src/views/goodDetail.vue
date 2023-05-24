@@ -8,7 +8,7 @@
         </div>
         <div class="detail-box">
           <div class="goodtitle">
-            <h3>{{ goodinfo.goodsName }} &nbsp;&nbsp;<label for="">{{ goodinfo.cost }}元</label></h3>
+            <h3>{{ goodinfo.goodsName }} &nbsp;&nbsp;<label for="">{{ goodinfo.price }}元</label></h3>
             <span>{{ goodinfo.modifiedTime }} 更新</span>
             <div class="shoucang">
               <div id="shoucang" @click="shoucang" style="font-size: 35px;margin-right: 10px;"
@@ -123,6 +123,7 @@ export default {
       if (res.code === 200) {
         this.goodinfo = res.data
         this.userid = res.data.userId
+        this.imglist = res.data.goodsPicInfos
         this.getuserinfobyid()
         const dateold = new Date(res.data.modifiedTime)
         this.goodinfo.modifiedTime = dateold.toLocaleString()

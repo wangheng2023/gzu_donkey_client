@@ -11,7 +11,7 @@
               <div class="detail">
                 <h3>{{ item.goodsName }}</h3>
                 <span class="scrib">{{ item.descript }}</span>
-                <label for="">￥{{ item.cost }}</label>
+                <label for="">￥{{ item.price }}</label>
               </div>
             </el-card>
           </div>

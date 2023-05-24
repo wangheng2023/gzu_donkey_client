@@ -28,7 +28,7 @@
             </el-select>
           </el-form-item>
           <el-form-item label="商品价格">
-            <el-input v-model="form.price" placeholder="请输入商品价格"></el-input>
+             <el-input-number v-model="form.price" @change="handleChange" :precision="2" :step="1" :min="0" label="请输入商品价格"></el-input-number>
           </el-form-item>
           <el-form-item label="商品图片">
             <twoUpload @uploadSuccess="uploadPicSuccess"></twoUpload>

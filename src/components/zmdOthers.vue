@@ -3,7 +3,7 @@
     <div class="container-center">
       <el-carousel :autoplay="false" trigger="click" arrow="always" height="400px">
         <el-carousel-item v-for="item in imglist" :key="item">
-          <img :src="item" alt="">
+          <img :src="item.picUrl" alt="">
         </el-carousel-item>
       </el-carousel>
     </div>
@@ -25,6 +25,8 @@ export default {
 
   img {
     width: 800px;
+    height:400px;
+    margin:0 auto;
   }
 }
 </style>

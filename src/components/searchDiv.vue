@@ -2,7 +2,7 @@
   <div>
     <div class="w search-box">
       <div class="search-left">
-        <img src="http://donkey.yuanyexiao.cn/user/image/default/551.png" alt="">
+        <img src="http://donkey.yuanyexiao.cn/20230511151210.png" alt="">
       </div>
       <div class="search-right">
         <div class="search-input">

@@ -37,10 +37,10 @@ export default {
         input: '',
         activeTab: ''
       },
-      imglist: ['https://petweb1-1253856731.cos.ap-beijing.myqcloud.com/uploads/20190910/a22645df3f07d41cc351d33b75e26633.jpg',
-        'https://petweb1-1253856731.cos.ap-beijing.myqcloud.com/uploads/20190910/d75bf4e276560d2590e94d1bb25ed672.jpg',
-        'https://petweb1-1253856731.cos.ap-beijing.myqcloud.com/uploads/20190910/c425f923549f1e940d80bedc42622dd3.jpg',
-        'https://petweb1-1253856731.cos.ap-beijing.myqcloud.com/uploads/20190910/13652ba89cada9454f5d668741ccbbcb.jpg'],
+      imglist: ['http://donkey.yuanyexiao.cn/goods/20230511142528.jpg',
+        'http://donkey.yuanyexiao.cn/goods/20230511143419.jpg',
+        'http://donkey.yuanyexiao.cn/goods/20230511143450.jpg',
+        'http://donkey.yuanyexiao.cn/goods/20230511143509.jpg'],
       storelist: []
     }
   },
