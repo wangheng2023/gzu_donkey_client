@@ -19,7 +19,7 @@
         </div>
       </div>
       <div class="fbgood">
-        <el-button type="danger" plain @click="toPub">发布商品</el-button>
+        <el-button type="danger" plain @click="toJudge('pubgood')">发布商品</el-button>
       </div>
     </div>
   </div>
@@ -34,8 +34,26 @@ export default {
     }
   },
   methods: {
-    toPub() {
-      this.$router.push({ name: 'pubgood' })
+    // 点击跳转前判断是否登录
+    toJudge(path) {
+      const str = document.cookie
+      const reg = /ticket/
+      if (!reg.test(str)) {
+        this.$confirm('您还未登录，请先登录', '提示', {
+          confirmButtonText: '去登录',
+          cancelButtonText: '先逛逛',
+          type: 'warning'
+        }).then(() => {
+          this.$router.push({ name: 'login' })
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消'
+          })
+        })
+      } else {
+        this.$router.push({ name: path })
+      }
     },
     // 模糊搜索
     likeSearch() {

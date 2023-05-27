@@ -15,7 +15,7 @@
         <el-divider><i class="el-icon-shopping-cart-full"></i></el-divider>
         <div class="title">
           <div class="tit-left">
-            我的收藏（全部 <label class="data" for="">{{ tableData.length }}</label> ）
+            浏览记录（全部 <label class="data" for="">{{ tableData.length }}</label> ）
           </div>
         </div>
         <!-- 购物车卡片 -->
@@ -46,11 +46,11 @@
             </el-table-column>
             <el-table-column prop="cost" label="单价" show-overflow-tooltip>
             </el-table-column>
-            <el-table-column>
+            <!-- <el-table-column>
               <template slot-scope="scope">
                 <el-button size="mini" type="text" @click="handleDelete(scope.row)">取消收藏</el-button>
               </template>
-            </el-table-column>
+            </el-table-column> -->
           </el-table>
         </div>
       </div>
@@ -82,7 +82,7 @@ export default {
     },
     // 获得收藏列表
     async getCollect() {
-      const { data: res } = await this.$axios.get('collect/allCollect')
+      const { data: res } = await this.$axios.get('/goods/getGoodsNew')
       if (res.code === 200) {
         this.tableData = res.data
       }

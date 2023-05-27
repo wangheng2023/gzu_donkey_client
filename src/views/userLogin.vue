@@ -140,6 +140,8 @@ export default {
               code: this.loginform.code
             })
             if (res.code === 200) {
+              console.log('res.permissionsList', res.data.permissionsList, res)
+              window.sessionStorage.setItem('permission', JSON.stringify(res.data.permissionsList))
               this.$message.success(res.msg)
               this.$router.push({ name: 'homemanager' })
             } else {

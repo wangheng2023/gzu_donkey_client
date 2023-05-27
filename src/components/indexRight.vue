@@ -61,15 +61,43 @@ export default {
         this.$router.push({ name: 'reg' })
       }
     },
+    // jump(val) {
+    //   if (val === 1) {
+    //     this.$router.push({ name: 'shopingcar' })
+    //   } else if (val === 2) {
+    //     this.$router.push({ name: 'mydialog' })
+    //   } else if (val === 3) {
+    //     this.$router.push({ name: 'attentionpage' })
+    //   } else {
+    //     this.$router.push({ name: 'shopingcar' })
+    //   }
+    // },
     jump(val) {
-      if (val === 1) {
-        this.$router.push({ name: 'shopingcar' })
-      } else if (val === 2) {
-        this.$router.push({ name: 'mydialog' })
-      } else if (val === 3) {
-        this.$router.push({ name: 'attentionpage' })
+      const str = document.cookie
+      const reg = /ticket/
+      if (!reg.test(str)) {
+        this.$confirm('您还未登录，请先登录', '提示', {
+          confirmButtonText: '去登录',
+          cancelButtonText: '先逛逛',
+          type: 'warning'
+        }).then(() => {
+          this.$router.push({ name: 'login' })
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消'
+          })
+        })
       } else {
-        this.$router.push({ name: 'shopingcar' })
+        if (val === 1) {
+          this.$router.push({ name: 'shopingcar' })
+        } else if (val === 2) {
+          this.$router.push({ name: 'mydialog' })
+        } else if (val === 3) {
+          this.$router.push({ name: 'attentionpage' })
+        } else {
+          this.$router.push({ name: 'browsinghistory' })
+        }
       }
     },
     // 退出登录
