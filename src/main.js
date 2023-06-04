@@ -10,7 +10,7 @@ import '@/assets/font_cujtoi8d3x/iconfont.css'
 import axios from 'axios'
 
 Vue.config.productionTip = false
-axios.defaults.baseURL = 'http://192.168.106.1:9090/donkey' // 设置全局默认值
+axios.defaults.baseURL = 'http://192.168.1.107:9090/donkey' // 设置全局默认值
 axios.defaults.timeout = 5000 // 设置5秒超时时间
 Vue.prototype.$axios = axios
 // 在每次请求中添加 CORS 头部
