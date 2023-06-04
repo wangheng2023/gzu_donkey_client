@@ -34,8 +34,8 @@
               <div class="lianxi">
                 <el-button type="danger" :disabled="isDisabled" plain @click="toMessage">联系我</el-button><br>
                 <div style="margin-top: 8px;"></div>
-                <el-button v-if="isDisabled" type="danger" plain>下架该商品</el-button>
-                <el-button v-else type="danger" plain>拍下宝贝</el-button>
+                <!-- <el-button v-if="isDisabled" type="danger" plain>下架该商品</el-button>
+                <el-button v-else type="danger" plain>拍下宝贝</el-button> -->
               </div>
             </div>
           </div>
@@ -101,7 +101,24 @@ export default {
       this.$router.go(-1)
     },
     toMessage() {
-      this.$router.push({ name: 'mydialog' })
+      const str = document.cookie
+      const reg = /ticket/
+      if (!reg.test(str)) {
+        this.$confirm('您还未登录，请先登录', '提示', {
+          confirmButtonText: '去登录',
+          cancelButtonText: '先逛逛',
+          type: 'warning'
+        }).then(() => {
+          this.$router.push({ name: 'login' })
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消'
+          })
+        })
+      } else {
+        this.$router.push({ name: 'mydialog' })
+      }
     },
     async shoucang() {
       const id = this.$route.query.id

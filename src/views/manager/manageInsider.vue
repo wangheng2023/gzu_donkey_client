@@ -2,8 +2,8 @@
   <div>
     <!-- 面包屑 -->
     <el-breadcrumb separator-icon="ArrowRight" style="margin-bottom: 10px;">
-      <el-breadcrumb-item :to="{ path: '/manageinsider' }">管理员管理</el-breadcrumb-item>
-      <el-breadcrumb-item>管理员权限分配</el-breadcrumb-item>
+      <el-breadcrumb-item :to="{ path: '/manageinsider' }">权限管理</el-breadcrumb-item>
+      <el-breadcrumb-item>权限分配</el-breadcrumb-item>
     </el-breadcrumb>
     <el-card>
       <div class="header">

@@ -7,7 +7,8 @@
           <li v-for="(item, index) in zhlist" :key="index">
             <div class="zhitem">
               <div class="left">
-                <div class="icon el-icon-circle-check"></div>
+                <div v-if="item.number === '暂未绑定'" class="icon el-icon-warning-outline"></div>
+                <div v-else class="icon el-icon-circle-check"></div>
                 <div style="margin-left: 30px;">
                   <div class="content">
                     {{ item.cate }}
@@ -16,7 +17,8 @@
                 </div>
               </div>
               <div class="btn">
-                <el-button @click="openDialog(item.cate)" type="text">修改</el-button>
+                <el-button @click="openDialog(item.cate)" type="text">{{ item.number === "暂未绑定" ? "绑定" : '修改'
+                }}</el-button>
               </div>
             </div>
           </li>
@@ -24,62 +26,90 @@
       </div>
     </div>
     <!-- 手机号修改框 -->
-    <el-dialog title="验证手机号" :visible.sync="outerVisible" @close="resetform('ruleFormRef1')">
-      <el-form ref="ruleFormRef1" :model="form" :rules="rules" label-width="120px" status-icon>
+    <el-dialog width="30%" title="验证手机号" :visible.sync="outerVisible" @close="resetform('ruleFormRef1')">
+      <el-form ref="ruleFormRef1" :model="form" :rules="rules" label-width="100px" status-icon>
         <el-form-item label="手机号" prop="phone">
-          <el-input v-model="form.phone" />
+          <el-input v-model="form.number" disabled />
         </el-form-item>
         <el-form-item label="验证码" prop="code">
           <el-row>
-            <el-col :span="6"> <el-input v-model="form.code" /></el-col>
-            <el-col :span="6"> <el-button style="margin-left: 10px;" @click="getcode">{{ sendmsg }}</el-button></el-col>
+            <el-col :span="12"> <el-input v-model="form.code" /></el-col>
+            <el-col :span="4"> <el-button style="margin-left: 10px;" @click="getcode(form.phone)">{{ sendmsg
+            }}</el-button></el-col>
           </el-row>
         </el-form-item>
       </el-form>
       <el-dialog width="30%" title="修改手机号" :visible.sync="innerVisible" append-to-body @close="resetform('ruleFormRef3')">
-        <el-form ref="ruleFormRef3" :model="changeform" :rules="rules" label-width="120px" status-icon>
+        <el-form ref="ruleFormRef3" :model="changeform" :rules="rules" label-width="100px" status-icon>
           <el-form-item label="手机号" prop="phone">
             <el-input v-model="changeform.phone" />
           </el-form-item>
           <el-form-item label="验证码" prop="code">
             <el-row>
               <el-col :span="12"> <el-input v-model="changeform.code" /></el-col>
-              <el-col :span="4"> <el-button style="margin-left: 10px;" @click="getcode">{{ sendmsg }}</el-button></el-col>
+              <el-col :span="4"> <el-button style="margin-left: 10px;" @click="getcodechange(changeform.phone)">{{ sendmsg
+              }}</el-button></el-col>
             </el-row>
           </el-form-item>
         </el-form>
         <template #footer>
           <span class="dialog-footer">
             <el-button @click="cancel">取消</el-button>
-            <el-button type="primary" @click="sure">确定</el-button>
+            <el-button type="primary" @click="sure(changeform.phone, changeform.code)">确定</el-button>
           </span>
         </template>
       </el-dialog>
       <div slot="footer" class="dialog-footer">
         <el-button @click="cancel">取 消</el-button>
-        <el-button type="primary" @click="changePhone">更换手机号</el-button>
+        <el-button type="primary" @click="changePhone(form.phone, form.code)">更换手机号</el-button>
       </div>
     </el-dialog>
 
     <!-- 邮箱修改框 -->
-    <el-dialog :visible.sync="dialogVisible1" title="修改" width="50%" @close="resetform('ruleFormRef2')">
-      <el-form ref="ruleFormRef2" :model="form" :rules="rules" label-width="120px" status-icon>
-        <el-form-item label="邮箱" prop="title">
-          <el-input v-model="form.email" />
+    <el-dialog width="30%" title="验证手机号" :visible.sync="emailouterVisible" @close="resetform('ruleFormRef1')">
+      <el-form ref="ruleFormRef1" :model="form" :rules="rules" label-width="100px" status-icon>
+        <el-form-item label="手机号" prop="phone">
+          <el-input v-model="form.number" disabled />
+        </el-form-item>
+        <el-form-item label="验证码" prop="code">
+          <el-row>
+            <el-col :span="12"> <el-input v-model="form.code" /></el-col>
+            <el-col :span="4"> <el-button style="margin-left: 10px;" @click="getcode(form.phone)">{{ sendmsg
+            }}</el-button></el-col>
+          </el-row>
         </el-form-item>
       </el-form>
-      <template #footer>
-        <span class="dialog-footer">
-          <el-button @click="dialogVisible1 = false">取消</el-button>
-          <el-button type="primary" @click="sureadd">确定</el-button>
-        </span>
-      </template>
+      <el-dialog width="30%" title="绑定邮箱" :visible.sync="emailinnerVisible" append-to-body
+        @close="resetform('ruleFormRefemail')">
+        <el-form ref="ruleFormRefemail" :model="changeform" :rules="rules" label-width="100px" status-icon>
+          <el-form-item label="邮箱" prop="email">
+            <el-input v-model="changeform.email" />
+          </el-form-item>
+          <el-form-item label="验证码" prop="code">
+            <el-row>
+              <el-col :span="12"> <el-input v-model="changeform.code" /></el-col>
+              <el-col :span="4"> <el-button style="margin-left: 10px;" @click="getcodeEmail(changeform.email)">{{ sendmsg
+              }}</el-button></el-col>
+            </el-row>
+          </el-form-item>
+        </el-form>
+        <template #footer>
+          <span class="dialog-footer">
+            <el-button @click="cancel">取消</el-button>
+            <el-button type="primary" @click="emailsure(changeform.email, changeform.code)">确定</el-button>
+          </span>
+        </template>
+      </el-dialog>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="cancel">取 消</el-button>
+        <el-button type="primary" @click="changePhone(form.phone, form.code)">绑定邮箱</el-button>
+      </div>
     </el-dialog>
     <!-- 修改密码 -->
-    <el-dialog width="30%" title="修改密码" :visible.sync="dialogVisible2" @close="resetform3">
-      <el-form label-width="0px" ref="regform" :rules="rules" :model="form" class="form_box">
+    <el-dialog width="30%" title="修改密码" :visible.sync="dialogVisible2" @close="resetform('changeform')">
+      <el-form label-width="0px" ref="changeform" :rules="rules" :model="form" class="form_box">
         <el-form-item prop="oldpass">
-          <el-input size="large" v-model="form.oldpass" placeholder="请输入旧密码" prefix-icon="iconfont icon-yewuquanxian"
+          <el-input size="large" v-model="form.oldpass" placeholder="请输入旧密码" prefix-icon="el-icon-key"
             clearable></el-input>
         </el-form-item>
         <!-- 密码 -->
@@ -120,12 +150,34 @@ export default {
         callback()
       }
     }
+    const validatePass = (rule, value, callback) => {
+      if (value === '') {
+        callback(new Error('请输入密码'))
+      } else {
+        if (this.form.checkPass !== '') {
+          this.$refs.changeform.validateField('checkPass')
+        }
+        callback()
+      }
+    }
+    const validatePass2 = (rule, value, callback) => {
+      if (value === '') {
+        callback(new Error('请再次输入密码'))
+      } else if (value !== this.form.pass) {
+        callback(new Error('两次输入密码不一致!'))
+      } else {
+        callback()
+      }
+    }
     return {
       outerVisible: false,
       innerVisible: false,
+      emailouterVisible: false,
+      emailinnerVisible: false,
       dialogVisible1: false,
       dialogVisible2: false,
       form: {
+        number: '',
         phone: '', // 修改手机号
         email: '', // 修改邮箱
         oldpass: '',
@@ -135,6 +187,7 @@ export default {
       },
       changeform: {
         phone: '',
+        email: '',
         code: ''
       },
       sendmsg: '发送验证码',
@@ -151,20 +204,70 @@ export default {
         ],
         code: [
           { validator: validateCode, required: true, trigger: 'blur' }
+        ],
+        email: [
+          { type: 'email', message: '请输入正确的邮箱地址', required: true, trigger: ['blur', 'change'] }
+        ],
+        oldpass: [
+          { required: true, message: '旧密码不能为空', trigger: 'blur' }
+        ],
+        pass: [
+          { validator: validatePass, trigger: 'blur' }
+        ],
+        checkPass: [
+          { validator: validatePass2, trigger: 'blur' }
         ]
       }
     }
   },
+  created() {
+    this.getuserinfo()
+  },
   methods: {
+    // 获取用户信息
+    async getuserinfo() {
+      const { data: res } = await this.$axios.get('/user/getCustomerInfo')
+      if (res.code === 200) {
+        this.zhlist[0].number = this.geTel(res.data.mobilePhone)
+        this.form.number = this.geTel(res.data.mobilePhone)
+        this.form.phone = res.data.mobilePhone
+        if (res.data.email) {
+          this.zhlist[1].number = this.getEmail(res.data.email)
+        } else {
+          this.zhlist[1].number = '暂未绑定'
+        }
+      }
+    },
+    // 隐藏中间4位数字
+    geTel(tel) {
+      const reg = /^(\d{3})\d{4}(\d{4})$/
+      return tel.replace(reg, '$1****$2')
+    },
+    getEmail(email) {
+      const arr = email.split('@')
+      // 再拼接起来substring() 方法用于提取字符串中介于两个指定下标之间的字符
+      return email.substring(0, 3) + '*****' + '@' + arr[1]
+    },
     resetForm(regform) {
       this.$refs[regform].resetFields()
     },
     openDialog(item) {
       if (item === '手机号') { this.outerVisible = true }
-      if (item === '邮箱') { this.dialogVisible1 = true }
+      if (item === '邮箱') { this.emailouterVisible = true }
       if (item === '密码') { this.dialogVisible2 = true }
     },
-    getcode() {
+    // 换绑时获取验证码
+    async getcodechange(phone) {
+      const { data: res } = await this.$axios.get(`/user/checkPhone?phone=${phone}`)
+      if (res.code === 200) {
+        this.getcode(phone)
+      } else {
+        this.$message.error('该手机号已被绑定，换一个试试吧！')
+      }
+    },
+    // 绑定邮箱获得验证码
+    getcodeEmail(email) {
+      this.$axios.get(`/mailCode/sendEmilCode?email=${email}`)
       this.$message.success('发送成功，请注意查收！')
       this.noSend = false
       let timer = 60
@@ -179,10 +282,38 @@ export default {
         }
       }, 1000)
     },
-    changePhone() {
-      clearInterval(this.timeFun)
-      this.innerVisible = true
-      this.sendmsg = '获取验证码'
+    // 获得验证码
+    async getcode(phone) {
+      // this.$refs.ruleFormRef1.validate(async (valid) => {
+      //   if (valid) {
+      const { data: res } = await this.$axios.get(`/smsCode/sendSmsCode?phone=${phone}`)
+      if (res.code === 200) {
+        this.$message.success('发送成功，请注意查收！')
+        this.noSend = false
+        let timer = 60
+        this.sendmsg = timer + 's'
+        this.timeFun = setInterval(() => {
+          --timer
+          this.sendmsg = timer + 's'
+          if (timer === 0) {
+            this.isSend = true
+            this.sendmsg = '重新发送'
+            clearInterval(this.timeFun)
+          }
+        }, 1000)
+      }
+    },
+    // 点击修改手机号
+    async changePhone(phone, code) {
+      const { data: res } = await this.$axios.get(`/smsCode/checkSmsCode?phone=${phone}&code=${code}`)
+      if (res.code === 200) {
+        clearInterval(this.timeFun)
+        this.innerVisible = true
+        this.emailinnerVisible = true
+        this.sendmsg = '获取验证码'
+      } else {
+        this.$message.error(res.msg)
+      }
     },
     cancel() {
       clearInterval(this.timeFun)
@@ -190,9 +321,65 @@ export default {
       this.outerVisible = false
       this.sendmsg = '获取验证码'
     },
-    sure() {
-      this.$message.success('换绑成功！')
+    // 确认更换手机号
+    async sure(phone, code) {
+      this.$refs.ruleFormRef3.validate(async (valid) => {
+        if (valid) {
+          const { data: res } = await this.$axios.get(`/smsCode/checkSmsCode?phone=${phone}&code=${code}`)
+          if (res.code === 200) {
+            const { data: res1 } = await this.$axios.get(`/user/updatePhone?phone=${phone}`)
+            if (res1.code === 200) {
+              this.$message.success('换绑成功！')
+              this.getuserinfo()
+              this.innerVisible = false
+              this.outerVisible = false
+            }
+          } else {
+            this.$message.error(res.msg)
+          }
+        }
+      })
+    },
+    // 确认绑定邮箱
+    emailsure(email, code) {
+      this.$refs.ruleFormRefemail.validate(async (valid) => {
+        if (valid) {
+          const { data: res } = await this.$axios.get(`/mailCode/checkEmilCode?email=${email}&code=${code}`)
+          if (res.code === 200) {
+            const { data: res1 } = await this.$axios.get(`/user/updateEmail?email=${email}`)
+            if (res1.code === 200) {
+              this.$message.success('邮箱绑定成功！')
+              this.getuserinfo()
+              this.emailinnerVisible = false
+              this.emailouterVisible = false
+            }
+          } else {
+            this.$message.error(res.msg)
+          }
+        }
+      })
+    },
+    // 修改密码
+    submitFormPass() {
+      this.$refs.changeform.validate(async (valid) => {
+        if (valid) {
+          const { data: res } = await this.$axios.post('/user/updatePassword',
+            {
+              oldPassword: this.form.oldpass,
+              newPassword: this.form.checkPass
+            })
+          if (res.code === 200) {
+            this.$message({ type: 'success', message: res.msg })
+            this.dialogVisible2 = false
+            this.$router.push({ name: 'index' })
+            window.sessionStorage.removeItem('userid')
+          } else { this.$message({ type: 'error', message: res.msg }) }
+        } else {
+          this.$message({ type: 'info', message: '请按要求填写表单' })
+        }
+      })
     }
+
   }
 }
 </script>

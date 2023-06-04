@@ -11,7 +11,7 @@ import axios from 'axios'
 
 Vue.config.productionTip = false
 axios.defaults.baseURL = 'http://192.168.1.107:9090/donkey' // 设置全局默认值
-axios.defaults.timeout = 5000 // 设置5秒超时时间
+axios.defaults.timeout = 100000 // 设置5秒超时时间
 Vue.prototype.$axios = axios
 // 在每次请求中添加 CORS 头部
 // axios.interceptors.request.use(function (config) {

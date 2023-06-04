@@ -4,32 +4,9 @@
       <!-- 侧边栏区域 -->
       <el-aside width="200px">
         <el-menu active-text-color="#409eff" background-color="#fff" class="el-menu-vertical-demo"
-          default-active="/managestudent" text-color="#333" router>
+          :default-active="defaultActive" text-color="#333" router>
           <!-- 一级标签 -->
-          <el-menu-item index="/manageuser">
-            <el-icon>
-              <Operation />
-            </el-icon>用户管理
-          </el-menu-item>
-          <el-menu-item index="/managegood">
-            <el-icon>
-              <House />
-            </el-icon>商品管理
-          </el-menu-item>
-          <el-menu-item index="/managerorder">
-            <el-icon>
-              <Guide />
-            </el-icon>学院管理
-          </el-menu-item>
-          <el-menu-item index="/manageclass">
-            <el-icon>
-              <UserFilled />
-            </el-icon>分类管理
-          </el-menu-item>
-          <el-menu-item index="/manageinsider">
-            <el-icon>
-              <UserFilled />
-            </el-icon>管理员管理
+          <el-menu-item v-for="(item, index1) in realmenu" :key="index1" :index="item.path">{{ item.meta.name }}
           </el-menu-item>
         </el-menu>
       </el-aside>
@@ -52,12 +29,40 @@
   </div>
 </template>
 <script>
+import { recursionRouter } from '@/utils/recursion-router'
+import DynamicRouters from '@/router/DynamicRouters'
 export default {
+  data() {
+    return {
+      menu: JSON.parse(window.sessionStorage.getItem('permission')),
+      realmenu: [],
+      defaultActive: ''
+    }
+  },
+  created() {
+    this.judeg()
+  },
   methods: {
     async signout() {
       // window.sessionStorage.removeItem('managerid')
       await this.$axios.get('/admin/logout')
       this.$router.push({ name: 'login' })
+    },
+    judeg() {
+      const realRouter = recursionRouter(this.menu, DynamicRouters)
+      this.realmenu = realRouter
+      this.defaultActive = this.realmenu[0].path
+      console.log('this.defaultActive', this.defaultActive)
+      const main = this.$router.options.routes.find(v => v.path === '/homemanager')
+      main.redirect = this.defaultActive
+      console.log(main)
+      // const children = main.children
+      // console.log(this.$router)
+      // 添加动态路由
+      //   main.redirect = children[0].path
+      //   children.push(...realRouter)
+      //   this.$router.matcher.addRoutes(children)
+      //
     }
   }
 }
